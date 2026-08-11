@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { caseStudies } from '../data/caseStudies';
-import { openPortfolioChat } from './PortfolioChat';
 
 /*
  * BrainExperience — the interactive first page.
@@ -702,16 +701,16 @@ export default function BrainExperience() {
               </motion.div>
             )}
 
-            {/* pulsing instruction chip */}
+            {/* Clear, non-overlapping cue for the interactive project showcase */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.2, duration: 0.6 }}
               className="pointer-events-none absolute bottom-3 left-0 right-0 flex justify-center"
             >
-              <button type="button" onClick={() => openPortfolioChat()} className="pointer-events-auto rounded-full border border-cyan-500/40 bg-cyan-950/50 px-5 py-2.5 text-xs font-mono tracking-wide text-cyan-300 backdrop-blur-sm transition-colors hover:border-cyan-300 hover:text-cyan-100 md:text-sm">
-                Chat with AI Assistant <span aria-hidden="true" className="ml-1.5">→</span>
-              </button>
+              <span className="rounded-full border border-cyan-500/40 bg-cyan-950/50 px-5 py-2.5 text-xs font-mono tracking-wide text-cyan-300 backdrop-blur-sm motion-safe:animate-pulse md:text-sm">
+                Click the brain to explore documented projects
+              </span>
             </motion.div>
           </motion.div>
         )}
