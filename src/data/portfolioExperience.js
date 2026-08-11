@@ -4,7 +4,7 @@ export const UPWORK_URL = 'https://www.upwork.com/freelancers/~01d014da7be413bde
 export const LINKEDIN_URL = 'https://www.linkedin.com/in/abdulaleemshaikh48/';
 
 export const PORTFOLIO_PROFILE = {
-  name: 'Shaikh',
+  name: 'Shaikh Abdul Aleem',
   role: 'Digital Transformation Consultant',
   summary: 'Helps growing businesses replace manual, scattered processes with structured digital systems they can manage, measure, and scale.',
   approach: 'Connect business needs, system requirements, and practical delivery so the business becomes easier to run, understand, and improve.'
@@ -38,7 +38,7 @@ export const SOCIAL_PROFILES = [
     color: '#14a800',
     glow: 'rgba(20,168,0,0.24)',
     pose: 'upwork',
-    accessibleName: "Open Shaikh's Upwork profile in a new tab"
+    accessibleName: "Open Shaikh Abdul Aleem's Upwork profile in a new tab"
   },
   {
     id: 'linkedin',
@@ -49,7 +49,7 @@ export const SOCIAL_PROFILES = [
     color: '#0a66c2',
     glow: 'rgba(10,102,194,0.28)',
     pose: 'linkedin',
-    accessibleName: "Open Shaikh's LinkedIn profile in a new tab"
+    accessibleName: "Open Shaikh Abdul Aleem's LinkedIn profile in a new tab"
   }
 ];
 

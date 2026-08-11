@@ -1,4 +1,4 @@
-# Shaikh — Digital Portfolio
+# Shaikh Abdul Aleem — Digital Portfolio
 
 A responsive React portfolio built with Vite, Tailwind CSS, Framer Motion, and a portfolio-grounded project assistant.
 

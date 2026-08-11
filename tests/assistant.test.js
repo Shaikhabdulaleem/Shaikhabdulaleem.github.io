@@ -9,6 +9,12 @@ test('retrieves documented services and projects', () => {
   assert.ok(retrieveKnowledge('field tracker').some((entry) => entry.title === 'Field Tracker System'));
 });
 
+test('uses the full name in the formal portfolio profile', () => {
+  const profile = retrieveKnowledge('Who is Shaikh?')[0];
+  assert.equal(profile.id, 'profile');
+  assert.match(profile.title, /Shaikh Abdul Aleem/);
+});
+
 test('generic wording does not outrank the requested toolkit topic', () => {
   assert.match(retrieveKnowledge('Tell me about the tools you use')[0].id, /^toolkit:/);
 });

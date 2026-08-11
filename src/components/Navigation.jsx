@@ -29,7 +29,7 @@ export default function Navigation() {
 
       <header className={`sticky top-0 z-50 transition-all duration-300 ${scrolled ? 'border-b border-gray-800/80 bg-[#0B0F19]/80 py-4 backdrop-blur-md' : 'bg-transparent py-6'}`}>
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6">
-          <a href="#" className="group flex items-center gap-3" aria-label="Shaikh portfolio home">
+          <a href="#" className="group flex items-center gap-3" aria-label="Shaikh Abdul Aleem portfolio home">
             <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-cyan-500 to-purple-600 text-lg font-black text-white shadow-[0_0_15px_rgba(6,182,212,0.3)] transition-all group-hover:shadow-[0_0_25px_rgba(6,182,212,0.6)]">
               SH
             </div>

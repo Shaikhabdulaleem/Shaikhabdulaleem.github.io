@@ -45,7 +45,7 @@ export default function About() {
           />
           <div className="space-y-5 text-sm text-gray-300 font-light leading-relaxed max-w-2xl -mt-6">
             <p>
-              I'm <span className="text-white font-medium">Shaikh</span>, a digital transformation
+              I'm <span className="text-white font-medium">Shaikh Abdul Aleem</span>, a digital transformation
               consultant helping growing businesses replace manual, scattered processes with structured digital
               systems they can manage, measure, and scale.
             </p>

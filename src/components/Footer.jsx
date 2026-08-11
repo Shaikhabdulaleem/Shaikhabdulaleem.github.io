@@ -52,7 +52,7 @@ export default function Footer() {
 
       <div className="border-t border-gray-900">
         <div className="max-w-7xl mx-auto px-6 py-5 flex flex-col items-center gap-2 text-center sm:items-start sm:text-left lg:flex-row lg:items-center lg:justify-between">
-          <p className="text-[11px] text-gray-600">&copy; {new Date().getFullYear()} Shaikh. All rights reserved.</p>
+          <p className="text-[11px] text-gray-600">&copy; {new Date().getFullYear()} Shaikh Abdul Aleem. All rights reserved.</p>
           <p className="text-[10px] font-mono text-gray-700 tracking-widest">SIGNAL END / NEURAL ARCHIVE v1.0</p>
         </div>
       </div>

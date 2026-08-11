@@ -660,7 +660,7 @@ export default function BrainExperience() {
                 transition={{ delay: 0.55, duration: 0.8 }}
                 className="mt-3 text-4xl md:text-6xl font-black tracking-tight text-white"
               >
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500">Shaikh</span>
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500">Shaikh Abdul Aleem</span>
               </motion.h1>
               <motion.p
                 initial={{ opacity: 0 }}
