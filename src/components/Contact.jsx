@@ -129,8 +129,9 @@ export default function Contact() {
               <span className="pb-2 text-sm font-mono text-purple-300">GOOGLE MEET</span>
             </div>
           </div>
-          <div className="md:text-right max-w-sm">
-            <p className="text-sm text-gray-400 leading-relaxed">The booking page shows live availability in your timezone and automatically protects times already busy on the connected calendar.</p>
+          <div className="max-w-sm md:text-right">
+            <span className="text-[10px] font-mono tracking-[0.18em] text-gray-600">WHAT HAPPENS NEXT</span>
+            <p className="mt-2 text-sm leading-relaxed text-gray-400">Choose the contact route that suits you, share the business need, then continue manually on WhatsApp or in a booked Google Meet. This portfolio does not send messages automatically.</p>
           </div>
         </div>
       </div>

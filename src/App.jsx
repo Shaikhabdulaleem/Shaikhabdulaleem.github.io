@@ -1,10 +1,12 @@
 import React from 'react';
 import Navigation from './components/Navigation';
 import BrainExperience from './components/BrainExperience';
+import CaseStudyPreview from './components/CaseStudyPreview';
 import NeuralBackdrop from './components/NeuralBackdrop';
 import About from './components/About';
 import Capabilities from './components/Capabilities';
 import DeliveryProcess from './components/DeliveryProcess';
+import ClientFAQ from './components/ClientFAQ';
 import Toolkit from './components/Toolkit';
 import Contact from './components/Contact';
 import ProfileConnect from './components/ProfileConnect';
@@ -31,9 +33,11 @@ export default function App() {
       <Navigation />
       <main id="main-content" className="relative z-10">
         <BrainExperience />
+        <CaseStudyPreview />
         <About />
         <Capabilities />
         <DeliveryProcess />
+        <ClientFAQ />
         <Toolkit />
         <Contact />
         <ProfileConnect />

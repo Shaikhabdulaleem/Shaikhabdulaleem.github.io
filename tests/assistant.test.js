@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { createDeterministicResponse } from '../src/assistant/deterministic.js';
 import { retrieveKnowledge } from '../src/assistant/knowledge.js';
 import { validateEnhancedReply } from '../server/grounding.js';
+import { PORTFOLIO_SERVICES } from '../src/data/portfolioExperience.js';
 
 test('retrieves documented services and projects', () => {
   assert.equal(retrieveKnowledge('Power BI dashboard')[0].id, 'service:bi');
@@ -13,6 +14,10 @@ test('uses the full name in the formal portfolio profile', () => {
   const profile = retrieveKnowledge('Who is Shaikh?')[0];
   assert.equal(profile.id, 'profile');
   assert.match(profile.title, /Shaikh Abdul Aleem/);
+});
+
+test('documents a client-fit description for every service', () => {
+  assert.ok(PORTFOLIO_SERVICES.every((service) => typeof service.bestFor === 'string' && service.bestFor.length > 20));
 });
 
 test('generic wording does not outrank the requested toolkit topic', () => {

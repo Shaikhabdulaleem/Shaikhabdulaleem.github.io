@@ -23,7 +23,7 @@ export default function Footer() {
           <span className="text-[10px] font-mono uppercase tracking-widest text-cyan-400 block mb-4">Navigate</span>
           <ul className="space-y-2.5">
             {[
-              ['Case Studies', '#case-studies'],
+              ['Selected Work', '#selected-work'],
               ['About', '#about'],
               ['Services', '#services'],
               ['Toolkit', '#toolkit'],

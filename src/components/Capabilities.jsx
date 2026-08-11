@@ -38,6 +38,10 @@ function ServiceDetail({ service }) {
         <h3 className="text-2xl md:text-3xl font-black text-white mt-3">{service.title}</h3>
         <p className="text-sm font-medium mt-2" style={{ color: service.color }}>{service.short}</p>
         <p className="text-sm text-gray-400 leading-relaxed mt-5">{service.description}</p>
+        <div className="mt-5 rounded-xl border border-gray-800 bg-[#0B0F19]/70 p-3.5">
+          <span className="text-[10px] font-mono uppercase tracking-[0.18em] text-gray-500">Best fit for</span>
+          <p className="mt-1.5 text-xs leading-relaxed text-gray-300">{service.bestFor}</p>
+        </div>
         <div className="mt-7">
           <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-gray-600">Typical deliverables</span>
           <p className="text-xs text-gray-300 leading-7 mt-2">{service.examples.join('  /  ')}</p>

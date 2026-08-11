@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react';
 
-const NAV_ITEMS = ['Services', 'Case Studies', 'Toolkit', 'Contact'];
+const NAV_ITEMS = [
+  { label: 'Services', href: '#services' },
+  { label: 'Selected Work', href: '#selected-work' },
+  { label: 'Toolkit', href: '#toolkit' },
+  { label: 'Contact', href: '#contact' }
+];
 
 export default function Navigation() {
   const [scrolled, setScrolled] = useState(false);
@@ -17,8 +22,6 @@ export default function Navigation() {
     window.addEventListener('keydown', closeOnEscape);
     return () => window.removeEventListener('keydown', closeOnEscape);
   }, []);
-
-  const itemHref = (item) => `#${item.toLowerCase().replace(' ', '-')}`;
 
   return (
     <>
@@ -41,8 +44,8 @@ export default function Navigation() {
 
           <nav className="hidden items-center gap-8 text-sm font-medium text-gray-300 md:flex" aria-label="Primary navigation">
             {NAV_ITEMS.map((item) => (
-              <a key={item} href={itemHref(item)} className="group relative py-1 transition-colors hover:text-cyan-400">
-                {item}
+              <a key={item.href} href={item.href} className="group relative py-1 transition-colors hover:text-cyan-400">
+                {item.label}
                 <span className="absolute bottom-0 left-0 h-[2px] w-0 bg-cyan-400 transition-all group-hover:w-full" />
               </a>
             ))}
@@ -72,8 +75,8 @@ export default function Navigation() {
           <nav id="mobile-navigation" className="mt-4 border-t border-gray-800/80 bg-[#0B0F19]/95 px-6 py-4 md:hidden" aria-label="Mobile navigation">
             <div className="mx-auto grid max-w-7xl gap-2">
               {NAV_ITEMS.map((item) => (
-                <a key={item} href={itemHref(item)} onClick={() => setMenuOpen(false)} className="rounded-lg px-3 py-3 text-sm text-gray-200 hover:bg-cyan-500/10 hover:text-cyan-300">
-                  {item}
+                <a key={item.href} href={item.href} onClick={() => setMenuOpen(false)} className="rounded-lg px-3 py-3 text-sm text-gray-200 hover:bg-cyan-500/10 hover:text-cyan-300">
+                  {item.label}
                 </a>
               ))}
               <a href="#contact" onClick={() => setMenuOpen(false)} className="mt-1 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 px-3 py-3 text-center text-sm font-semibold text-white">Start a Project</a>

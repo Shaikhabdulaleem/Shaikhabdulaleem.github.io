@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { caseStudies } from '../data/caseStudies';
+import { BOOKING_URL, buildWhatsAppUrl } from '../data/portfolioExperience';
+import { openPortfolioChat } from './PortfolioChat';
 
 /*
  * BrainExperience — the interactive first page.
@@ -12,6 +14,7 @@ import { caseStudies } from '../data/caseStudies';
  */
 
 const EMBER_COLORS = ['#fbbf24', '#f59e0b', '#ef4444', '#fb7185'];
+const HERO_WHATSAPP_URL = buildWhatsAppUrl('Hi Shaikh, I visited your portfolio and would like to discuss a digital project.');
 
 /* ------------------------------------------------------------------ */
 /* 3D brain point cloud: two wrinkled hemispheres + cerebellum + stem  */
@@ -645,22 +648,22 @@ export default function BrainExperience() {
             className="absolute inset-0 z-10"
           >
             {/* intro copy */}
-            <div className="absolute top-[10%] left-0 right-0 text-center px-6 pointer-events-none">
+            <div className="absolute left-0 right-0 top-[6%] px-6 text-center pointer-events-none">
               <motion.p
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.7 }}
                 className="text-[11px] md:text-xs font-mono uppercase tracking-[0.35em] text-cyan-400"
               >
-                Digital Transformation · SaaS · AI · Automation
+                SHAIKH ABDUL ALEEM · DIGITAL TRANSFORMATION CONSULTANT
               </motion.p>
               <motion.h1
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.55, duration: 0.8 }}
-                className="mt-3 text-4xl md:text-6xl font-black tracking-tight text-white"
+                className="mx-auto mt-3 max-w-4xl text-3xl font-black tracking-tight text-white sm:text-4xl md:text-6xl"
               >
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500">Shaikh Abdul Aleem</span>
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500">Make operations easier to run.</span>
               </motion.h1>
               <motion.p
                 initial={{ opacity: 0 }}
@@ -668,9 +671,24 @@ export default function BrainExperience() {
                 transition={{ delay: 0.9, duration: 0.8 }}
                 className="mt-4 text-sm md:text-base text-gray-400 font-light max-w-xl mx-auto leading-relaxed"
               >
-                I turn manual, scattered processes into smart digital systems —
-                every project starts as a spark inside this brain.
+                Shaikh Abdul Aleem helps growing businesses turn manual processes, scattered data, and early digital ideas into structured systems they can manage, measure, and scale.
               </motion.p>
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1.05, duration: 0.6 }}
+                className="pointer-events-auto mx-auto mt-6 flex max-w-xl flex-wrap justify-center gap-3"
+              >
+                <a href={HERO_WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center justify-center rounded-xl bg-emerald-500 px-4 text-sm font-semibold text-slate-950 transition-colors hover:bg-emerald-400">
+                  Discuss on WhatsApp
+                </a>
+                <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center justify-center rounded-xl border border-purple-300/45 bg-purple-500/15 px-4 text-sm font-semibold text-purple-100 transition-colors hover:bg-purple-500/25">
+                  Book a Google Meet
+                </a>
+              </motion.div>
+              <button type="button" onClick={() => openPortfolioChat()} className="pointer-events-auto mt-4 text-xs font-semibold text-cyan-200 underline decoration-cyan-400/50 underline-offset-4 transition-colors hover:text-white">
+                Prefer to shape the need first? Use the project assistant.
+              </button>
             </div>
 
             {/* clickable brain hotspot */}
@@ -683,9 +701,9 @@ export default function BrainExperience() {
                   triggerBurst();
                 }
               }}
-              aria-label="Click the Brain to explore my Projects"
+              aria-label="Explore documented case studies"
               className="absolute left-1/2 top-[55%] -translate-x-1/2 -translate-y-1/2 w-[52vmin] h-[46vmin] cursor-pointer rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 focus-visible:ring-offset-4 focus-visible:ring-offset-[#05070D]"
-              title="Click the Brain to explore my Projects"
+              title="Explore documented case studies"
             />
 
             {/* animated cursor hint that taps the brain, like the video */}
@@ -710,7 +728,7 @@ export default function BrainExperience() {
               className="absolute bottom-[8%] left-0 right-0 flex justify-center pointer-events-none"
             >
               <span className="px-5 py-2.5 rounded-full border border-cyan-500/40 bg-cyan-950/50 backdrop-blur-sm text-xs md:text-sm font-mono text-cyan-300 motion-safe:animate-pulse tracking-wide">
-                ⬢ Click the Brain to explore my Projects
+                ⬢ Explore documented case studies
               </span>
             </motion.div>
           </motion.div>
