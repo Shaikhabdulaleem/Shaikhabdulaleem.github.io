@@ -5,6 +5,9 @@ const UNKNOWN = "I don't have verified information about that in Shaikh's portfo
 const SERVICE_OVERVIEW = `Shaikh helps with ${PORTFOLIO_SERVICES.map((service) => service.title).join(', ')}. Tell me what you want to build, improve, or automate and I'll point you toward the most relevant option.`;
 const GENERAL_SERVICES = /what.*service|services|what do you (do|offer)|how can you help|capabilities|explore services/i;
 const GREETING = /^(hi|hello|hey|good (morning|afternoon|evening)|salaam|assalamu alaikum)[!.\s]*$/i;
+const BUSINESS_CONTEXT = /\b(i|we)\s+(run|operate|own|manage)\b|\b(company|business|agency|firm|store|shop|clinic|restaurant|construction|logistics|retail|e-?commerce|manufactur\w*|real estate)\b/i;
+const UNSUPPORTED_WEBSITE = /\b(website|landing page|wordpress|shopify)\b/i;
+const GENERAL_DISCOVERY = /help.*business|improv\w*.*business|digital solution|not sure|something else/i;
 
 export const initialSuggestions = ['Explore services', 'See relevant projects', 'Ask about the process', 'Start a project'];
 export const createConversationState = () => ({ stage: 'discovery', serviceId: null, questionIndex: 0, answers: {}, originalNeed: '' });
@@ -19,6 +22,17 @@ export function detectService(message) {
 }
 
 function beginQualification(service, value) {
+  if (BUSINESS_CONTEXT.test(value)) {
+    const question = service.questions[0];
+    return {
+      reply: `That sounds like a ${service.title} conversation, and you have already given me useful business context. ${question.prompt}`,
+      entries: retrieveKnowledge(service.title, 1),
+      suggestions: question.suggestions,
+      serviceId: service.id,
+      action: 'qualify',
+      state: { stage: 'questions', serviceId: service.id, questionIndex: 0, answers: { business: value }, originalNeed: value }
+    };
+  }
   return {
     reply: `That sounds like a ${service.title} conversation. Before suggesting a solution, what kind of business do you run, and what does the business do today?`,
     entries: retrieveKnowledge(service.title, 1),
@@ -99,16 +113,22 @@ export function createDeterministicResponse(message, rawState = createConversati
   const entries = retrieveKnowledge(value);
 
   if (/book|appointment|schedule|discovery call|meeting/i.test(value)) {
-    return { reply: 'Absolutely. Choose an available 60-minute Google Meet time below. The booking page will show times in your timezone.', entries: [], suggestions: [], actions: conversionActions(), action: 'booking', state };
+    return { reply: 'Absolutely. Choose an available Google Meet time below. The booking page will show times in your timezone.', entries: [], suggestions: [], actions: conversionActions(), action: 'booking', state };
   }
   if (/whatsapp|speak to|talk to|contact shaikh/i.test(value)) {
-    return { reply: 'You can continue directly with Shaikh on WhatsApp or reserve a discovery call.', entries: [], suggestions: [], actions: conversionActions(), action: 'contact', state };
+    return { reply: 'You can continue directly with Shaikh on WhatsApp at +966511493209 or reserve a discovery call.', entries: [], suggestions: [], actions: conversionActions(), action: 'contact', state };
+  }
+  if (/\bemail\b/i.test(value)) {
+    return { reply: 'An email address is not listed as a contact route in this portfolio. You can reach Shaikh on WhatsApp at +966511493209 or choose a Google Meet time.', entries: [], suggestions: [], actions: conversionActions(), action: 'contact', state };
   }
   if (SENSITIVE_CLAIM_PATTERN.test(value)) {
     return { reply: UNKNOWN, entries: [], suggestions: ['Start a project'], actions: conversionActions(), action: 'contact', state };
   }
-  if (/start a project|contact me|\bhire (you|shaikh)\b|project brief/i.test(value)) {
-    return { reply: 'Great — book a meeting on Google Calendar or contact Shaikh directly on WhatsApp at +966511493209.', entries: [], suggestions: [], actions: conversionActions(), action: 'contact', state: { ...state, stage: 'contact' } };
+  if (/start a project|project brief/i.test(value)) {
+    return { reply: 'Great — what would you like to build, improve, automate, or understand better? Choose the closest area or describe the problem in your own words.', entries: [], suggestions: PORTFOLIO_SERVICES.map((service) => service.title), action: 'discover', state: { ...createConversationState(), originalNeed: value } };
+  }
+  if (/contact me|\bhire (you|shaikh)\b/i.test(value)) {
+    return { reply: 'You can book a meeting on Google Calendar or contact Shaikh directly on WhatsApp at +966511493209.', entries: [], suggestions: [], actions: conversionActions(), action: 'contact', state: { ...state, stage: 'contact' } };
   }
 
   if (activeService && ['business', 'questions', 'timeframe'].includes(state.stage)) return continueQualification(value, state, activeService);
@@ -116,6 +136,14 @@ export function createDeterministicResponse(message, rawState = createConversati
   if (/case stud|see relevant projects|portfolio example|past work/i.test(value) && !matchedService) {
     const projects = retrieveKnowledge('case study project valuation equipment field tracker', 3);
     return { reply: `The portfolio documents three projects: ${projects.map((entry) => entry.title).join(', ')}. Select one for its challenge, solution, workflow, and documented outcome.`, entries: projects, suggestions: ['AI Chatbot & Equipment Management', 'Valuation Management Modules', 'Field Tracker System'], action: 'explore', state };
+  }
+
+  if (UNSUPPORTED_WEBSITE.test(value)) {
+    return { reply: "Website development is not listed as a documented service in Shaikh's portfolio, so I do not want to imply that it is offered. You can still describe the business need on WhatsApp or discuss it in a discovery call.", entries: [], suggestions: ['Explore documented services'], actions: conversionActions(), action: 'contact', state };
+  }
+
+  if (GENERAL_DISCOVERY.test(value)) {
+    return { reply: 'I can help narrow it down. What is the main business problem you want to solve: repetitive work, scattered data, a new software product, an AI use case, or a delivery problem?', entries: [], suggestions: PORTFOLIO_SERVICES.map((service) => service.title), action: 'discover', state };
   }
 
   // Specific service intent must win over the generic word "services".

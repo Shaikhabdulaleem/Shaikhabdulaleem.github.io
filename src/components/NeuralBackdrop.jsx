@@ -12,18 +12,22 @@ export default function NeuralBackdrop() {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      return;
+    }
     let raf, W, H;
     let lastFrame = 0;
     let running = document.visibilityState === 'visible';
     let heroSuppressed = false;
     const mobile = window.matchMedia('(max-width: 768px)').matches;
-    const frameInterval = 1000 / (mobile ? 20 : 30);
+    const frameInterval = 1000 / (mobile ? 12 : 18);
     let pts = [];
 
     const layout = () => {
       W = canvas.width = window.innerWidth;
       H = canvas.height = window.innerHeight;
-      pts = Array.from({ length: Math.min(mobile ? 24 : 42, Math.floor(W / (mobile ? 34 : 30))) }, () => ({
+      pts = Array.from({ length: Math.min(mobile ? 18 : 32, Math.floor(W / (mobile ? 42 : 36))) }, () => ({
         x: Math.random() * W,
         y: Math.random() * H,
         vx: (Math.random() - 0.5) * 0.18,

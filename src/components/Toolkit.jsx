@@ -67,7 +67,7 @@ export default function Toolkit() {
             {/* hub dot */}
             <div className="flex items-center gap-3 mb-5">
               <span
-                className={`w-3 h-3 rounded-full ${cat.hub} animate-pulse flex-shrink-0`}
+                className={`w-3 h-3 rounded-full ${cat.hub} motion-safe:animate-pulse flex-shrink-0`}
                 style={{ boxShadow: `0 0 10px ${cat.glow}` }}
               />
               <span className="text-xs font-mono uppercase tracking-widest text-gray-400 font-bold">

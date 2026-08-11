@@ -7,7 +7,7 @@ export default function Footer() {
         <div className="space-y-3">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-cyan-500 to-purple-600 flex items-center justify-center text-white font-black text-base shadow-[0_0_15px_rgba(6,182,212,0.3)]">
-              AA
+              SH
             </div>
             <div>
               <span className="block font-bold tracking-tight text-white leading-none">Shaikh</span>
@@ -39,13 +39,13 @@ export default function Footer() {
         </div>
 
         <div>
-          <span className="text-[10px] font-mono uppercase tracking-widest text-purple-400 block mb-4">Availability</span>
+          <span className="text-[10px] font-mono uppercase tracking-widest text-purple-400 block mb-4">Start a conversation</span>
           <p className="max-w-xs text-xs leading-relaxed text-gray-500">
-            Open to consulting projects worldwide across SaaS planning, AI implementation, automation, BI, and digital delivery.
+            Use the project assistant to shape your need, then continue through WhatsApp or Google Calendar.
           </p>
           <div className="flex items-center gap-2 mt-4">
             <span className="w-2 h-2 rounded-full bg-cyan-400 motion-safe:animate-pulse" />
-            <span className="text-[11px] text-gray-500">Project signal is open</span>
+            <span className="text-[11px] text-gray-500">WhatsApp and Calendar contact routes</span>
           </div>
         </div>
       </div>

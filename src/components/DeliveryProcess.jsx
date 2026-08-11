@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import SectionHeader from './SectionHeader';
 import { DELIVERY_STEPS } from '../data/portfolioExperience';
 
@@ -22,6 +22,7 @@ for (let i = 1; i < NODES.length; i++) {
 }
 
 export default function DeliveryProcess() {
+  const reduceMotion = useReducedMotion();
   return (
     <section id="process" className="relative bg-[#070A12]/70 py-24 border-y border-gray-900/80 scroll-mt-24">
       <div className="max-w-7xl mx-auto px-6">
@@ -66,7 +67,7 @@ export default function DeliveryProcess() {
 
                   <circle cx={x} cy={y} r="13" fill="#0B0F19" stroke="url(#axonGrad)" strokeWidth="1.4" />
                   <circle cx={x} cy={y} r="4.5" fill="#67e8f9">
-                    <animate attributeName="opacity" values="0.5;1;0.5" dur={`${2 + i * 0.3}s`} repeatCount="indefinite" />
+                    {!reduceMotion && <animate attributeName="opacity" values="0.5;1;0.5" dur={`${2 + i * 0.3}s`} repeatCount="indefinite" />}
                   </circle>
 
                   <text
@@ -95,13 +96,17 @@ export default function DeliveryProcess() {
             })}
 
             {/* traveling signals */}
-            <circle r="5" fill="#e0f2fe">
-              <animateMotion dur="7s" repeatCount="indefinite" path={AXON_D} />
-              <animate attributeName="opacity" values="1;0.6;1" dur="0.6s" repeatCount="indefinite" />
-            </circle>
-            <circle r="3" fill="#f0abfc" opacity="0.85">
-              <animateMotion dur="7s" begin="3.5s" repeatCount="indefinite" path={AXON_D} />
-            </circle>
+            {!reduceMotion && (
+              <>
+                <circle r="5" fill="#e0f2fe">
+                  <animateMotion dur="7s" repeatCount="indefinite" path={AXON_D} />
+                  <animate attributeName="opacity" values="1;0.6;1" dur="0.6s" repeatCount="indefinite" />
+                </circle>
+                <circle r="3" fill="#f0abfc" opacity="0.85">
+                  <animateMotion dur="7s" begin="3.5s" repeatCount="indefinite" path={AXON_D} />
+                </circle>
+              </>
+            )}
           </svg>
         </div>
 
@@ -112,7 +117,7 @@ export default function DeliveryProcess() {
             {steps.map((step) => (
               <div key={step.id} className="relative">
                 <span className="absolute -left-8 top-0.5 w-[19px] h-[19px] rounded-full bg-[#0B0F19] border border-cyan-400/60 flex items-center justify-center">
-                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-300 animate-pulse" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-300 motion-safe:animate-pulse" />
                 </span>
                 <span className="block font-mono text-[10px] text-purple-400 font-bold">{step.id}</span>
                 <span className="text-sm font-semibold text-gray-200">{step.title}</span>

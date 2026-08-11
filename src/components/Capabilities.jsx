@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import SectionHeader from './SectionHeader';
 import { PORTFOLIO_SERVICES } from '../data/portfolioExperience';
 import { openPortfolioChat } from './PortfolioChat';
@@ -39,7 +39,7 @@ function ServiceDetail({ service }) {
         <p className="text-sm font-medium mt-2" style={{ color: service.color }}>{service.short}</p>
         <p className="text-sm text-gray-400 leading-relaxed mt-5">{service.description}</p>
         <div className="mt-7">
-          <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-gray-600">Typical outcomes</span>
+          <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-gray-600">Typical deliverables</span>
           <p className="text-xs text-gray-300 leading-7 mt-2">{service.examples.join('  /  ')}</p>
         </div>
         <button
@@ -57,6 +57,7 @@ function ServiceDetail({ service }) {
 
 export default function Capabilities() {
   const [activeId, setActiveId] = useState(PORTFOLIO_SERVICES[0].id);
+  const reduceMotion = useReducedMotion();
   const activeService = PORTFOLIO_SERVICES.find((service) => service.id === activeId) || PORTFOLIO_SERVICES[0];
 
   return (
@@ -86,18 +87,18 @@ export default function Capabilities() {
                   <motion.span
                     className="absolute -top-1 w-2 h-2 rounded-full"
                     style={{ backgroundColor: service.color, boxShadow: `0 0 14px ${service.color}` }}
-                    animate={{ left: ['0%', '88%'], opacity: [0, 1, 0] }}
-                    transition={{ duration: 1.8, repeat: Infinity, ease: 'linear' }}
+                    animate={reduceMotion ? { left: '88%', opacity: 0.65 } : { left: ['0%', '88%'], opacity: [0, 1, 0] }}
+                    transition={reduceMotion ? { duration: 0 } : { duration: 1.8, repeat: Infinity, ease: 'linear' }}
                   />
                 )}
               </div>
             ))}
 
             <div className="relative -translate-x-1/2 -translate-y-1/2 w-40 h-40 rounded-full border border-cyan-500/25 bg-[#0B0F19]/95 flex flex-col items-center justify-center text-center shadow-[0_0_70px_rgba(34,211,238,0.1)]">
-              <div className="absolute inset-3 rounded-full border border-dashed border-purple-400/15 animate-[spin_9s_linear_infinite]" />
+              <div className="absolute inset-3 rounded-full border border-dashed border-purple-400/15 motion-safe:animate-[spin_9s_linear_infinite]" />
               <span className="relative text-[9px] font-mono tracking-[0.18em] text-gray-500">ROUTER CORE</span>
               <span className="relative text-base font-black text-white mt-2 leading-tight">YOUR<br />BUSINESS NEED</span>
-              <span className="relative w-2 h-2 rounded-full bg-cyan-300 mt-3 animate-pulse shadow-[0_0_14px_#67e8f9]" />
+              <span className="relative mt-3 h-2 w-2 rounded-full bg-cyan-300 shadow-[0_0_14px_#67e8f9] motion-safe:animate-pulse" />
             </div>
           </div>
 

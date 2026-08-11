@@ -5,7 +5,7 @@ export default function SectionHeader({ kicker, kickerColor = 'text-cyan-400', t
   return (
     <div className={`mb-14 ${center ? 'text-center' : 'text-center md:text-left'}`}>
       <span className={`inline-flex items-center gap-2 text-[11px] uppercase font-mono tracking-[0.3em] ${kickerColor}`}>
-        <span className="w-1.5 h-1.5 rounded-full bg-current animate-pulse" />
+        <span className="w-1.5 h-1.5 rounded-full bg-current motion-safe:animate-pulse" />
         {kicker}
       </span>
       <h2 className="text-3xl md:text-4xl font-black tracking-tight text-white mt-3">

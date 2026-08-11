@@ -16,7 +16,7 @@ GitHub Pages runs the deterministic assistant entirely in the browser. It remain
 - Services and capabilities
 - Structured delivery process
 - Technology toolkit
-- Grounded project assistant
+- Grounded portfolio and project assistant
 - Google Calendar and WhatsApp contact options
 
 ## Local development

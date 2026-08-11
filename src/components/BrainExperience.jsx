@@ -282,7 +282,7 @@ export default function BrainExperience() {
     let inViewport = false;
     let pageVisible = document.visibilityState === 'visible';
     const mobile = window.matchMedia('(max-width: 768px)').matches;
-    const frameInterval = reducedMotion ? 250 : 1000 / (mobile ? 20 : 30);
+    const frameInterval = reducedMotion ? 250 : 1000 / (mobile ? 18 : 24);
 
     let embers = [];
     let streams = [];
@@ -326,19 +326,21 @@ export default function BrainExperience() {
       const deltaSeconds = lastFrame ? Math.min((timestamp - lastFrame) / 1000, 0.1) : 1 / 60;
       const motionScale = deltaSeconds * 60;
       lastFrame = timestamp;
-      t += deltaSeconds;
+      if (!reducedMotion) t += deltaSeconds;
       const st = stageRef.current;
       ctx.clearRect(0, 0, W, H);
 
       // --- ambient embers, always on ---
       embers.forEach((p) => {
-        p.x += p.vx * motionScale;
-        p.y += p.vy * motionScale;
+        if (!reducedMotion) {
+          p.x += p.vx * motionScale;
+          p.y += p.vy * motionScale;
+        }
         if (p.x < -10) p.x = W + 10;
         if (p.x > W + 10) p.x = -10;
         if (p.y < -10) p.y = H + 10;
         if (p.y > H + 10) p.y = -10;
-        const a = 0.35 + 0.55 * (0.5 + 0.5 * Math.sin(t * 2 + p.tw));
+        const a = reducedMotion ? 0.55 : 0.35 + 0.55 * (0.5 + 0.5 * Math.sin(t * 2 + p.tw));
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
         ctx.fillStyle = p.c;
@@ -687,16 +689,18 @@ export default function BrainExperience() {
             />
 
             {/* animated cursor hint that taps the brain, like the video */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1, x: [30, 0, 0, 30], y: [40, 0, 0, 40], scale: [1, 1, 0.82, 1] }}
-              transition={{ delay: 1.4, duration: 2.6, repeat: Infinity, times: [0, 0.4, 0.55, 1] }}
-              className="absolute left-[56%] top-[60%] z-20 pointer-events-none text-white"
-            >
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="white" stroke="black" strokeWidth="1">
-                <path d="M4 2 L20 12 L12 13.5 L16 21 L13 22.5 L9.5 15 L4 19 Z" />
-              </svg>
-            </motion.div>
+            {!reducedMotion && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1, x: [30, 0, 0, 30], y: [40, 0, 0, 40], scale: [1, 1, 0.82, 1] }}
+                transition={{ delay: 1.4, duration: 2.6, repeat: Infinity, times: [0, 0.4, 0.55, 1] }}
+                className="absolute left-[56%] top-[60%] z-20 pointer-events-none text-white"
+              >
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="white" stroke="black" strokeWidth="1">
+                  <path d="M4 2 L20 12 L12 13.5 L16 21 L13 22.5 L9.5 15 L4 19 Z" />
+                </svg>
+              </motion.div>
+            )}
 
             {/* pulsing instruction chip */}
             <motion.div
@@ -705,7 +709,7 @@ export default function BrainExperience() {
               transition={{ delay: 1.2, duration: 0.6 }}
               className="absolute bottom-[8%] left-0 right-0 flex justify-center pointer-events-none"
             >
-              <span className="px-5 py-2.5 rounded-full border border-cyan-500/40 bg-cyan-950/50 backdrop-blur-sm text-xs md:text-sm font-mono text-cyan-300 animate-pulse tracking-wide">
+              <span className="px-5 py-2.5 rounded-full border border-cyan-500/40 bg-cyan-950/50 backdrop-blur-sm text-xs md:text-sm font-mono text-cyan-300 motion-safe:animate-pulse tracking-wide">
                 ⬢ Click the Brain to explore my Projects
               </span>
             </motion.div>
@@ -716,7 +720,7 @@ export default function BrainExperience() {
       {/* ------------------------------ BURST ------------------------------ */}
       {stage === 'burst' && (
         <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none">
-          <span className="text-xs font-mono tracking-[0.3em] text-cyan-300 animate-pulse">
+          <span className="text-xs font-mono tracking-[0.3em] text-cyan-300 motion-safe:animate-pulse">
             IGNITING NEURAL PROJECT GRID…
           </span>
         </div>
@@ -743,8 +747,8 @@ export default function BrainExperience() {
                 <motion.button
                   onClick={() => openStudy(study)}
                   initial={{ opacity: 0, scale: 0.4 }}
-                  animate={{ opacity: 1, scale: 1, y: [0, -12, 0] }}
-                  transition={{
+                  animate={reducedMotion ? { opacity: 1, scale: 1 } : { opacity: 1, scale: 1, y: [0, -12, 0] }}
+                  transition={reducedMotion ? { opacity: { delay: 0.15 * i, duration: 0.2 }, scale: { delay: 0.15 * i, duration: 0.2 } } : {
                     opacity: { delay: 0.15 * i, duration: 0.5 },
                     scale: { delay: 0.15 * i, type: 'spring', stiffness: 120 },
                     y: { delay: 0.12 * i, duration: 2.8 + i * 0.4, repeat: Infinity, ease: 'easeInOut' }
@@ -754,10 +758,10 @@ export default function BrainExperience() {
                 >
                   <div>
                     <div className="group-hover:hidden">
-                      <NeuronCluster size={150} glow="#38bdf8" seed={study.id} pulse />
+                      <NeuronCluster size={150} glow="#38bdf8" seed={study.id} pulse={!reducedMotion} />
                     </div>
                     <div className="hidden group-hover:block">
-                      <NeuronCluster size={150} glow="#c084fc" seed={study.id} pulse />
+                      <NeuronCluster size={150} glow="#c084fc" seed={study.id} pulse={!reducedMotion} />
                     </div>
                   </div>
                   <div className="text-center max-w-[220px]">
@@ -794,11 +798,11 @@ export default function BrainExperience() {
               {/* zoomed AI brain */}
               <motion.div
                 initial={{ scale: 0.5, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1, y: [0, -8, 0] }}
-                transition={{ scale: { type: 'spring', stiffness: 90 }, y: { duration: 3.2, repeat: Infinity, ease: 'easeInOut' } }}
+                animate={reducedMotion ? { scale: 1, opacity: 1 } : { scale: 1, opacity: 1, y: [0, -8, 0] }}
+                transition={reducedMotion ? { duration: 0.2 } : { scale: { type: 'spring', stiffness: 90 }, y: { duration: 3.2, repeat: Infinity, ease: 'easeInOut' } }}
                 className="hidden md:flex flex-col items-center gap-4"
               >
-                <NeuronCluster size={230} glow="#c084fc" seed={activeStudy.id} pulse />
+                <NeuronCluster size={230} glow="#c084fc" seed={activeStudy.id} pulse={!reducedMotion} />
                 <span className="text-[10px] font-mono tracking-[0.25em] text-purple-300 uppercase">Neural Unit 0{activeStudy.id}</span>
               </motion.div>
 
@@ -841,7 +845,7 @@ export default function BrainExperience() {
                     </div>
                   </div>
                   <div className="p-4 bg-gradient-to-br from-cyan-950/25 to-transparent rounded-xl border border-cyan-900/30">
-                    <h4 className="text-[10px] font-mono uppercase tracking-wider text-cyan-300 mb-1.5">Quantifiable Outcome</h4>
+                    <h4 className="text-[10px] font-mono uppercase tracking-wider text-cyan-300 mb-1.5">Documented Outcome</h4>
                     <p className="text-xs text-cyan-100 leading-relaxed font-medium">{activeStudy.outcome}</p>
                   </div>
                 </div>
@@ -862,7 +866,7 @@ export default function BrainExperience() {
       </AnimatePresence>
 
       {/* scroll cue */}
-      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-10 text-gray-600 text-[10px] font-mono tracking-widest animate-bounce pointer-events-none">
+      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-10 text-gray-600 text-[10px] font-mono tracking-widest motion-safe:animate-bounce pointer-events-none">
         SCROLL ▾
       </div>
     </section>

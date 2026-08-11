@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import SectionHeader from './SectionHeader';
 
 const signals = [
@@ -27,6 +27,7 @@ const signals = [
 ];
 
 export default function About() {
+  const reduceMotion = useReducedMotion();
   return (
     <section id="about" className="relative max-w-7xl mx-auto px-6 py-24 overflow-hidden">
       <div className="grid lg:grid-cols-12 gap-14 items-center">
@@ -66,8 +67,8 @@ export default function About() {
           className="lg:col-span-6 relative min-h-[360px] md:min-h-[420px]"
           aria-label="Business, technology, and delivery converge into one system-building approach"
         >
-          <div className="absolute inset-[14%] rounded-full border border-cyan-500/10 animate-[spin_12s_linear_infinite]" />
-          <div className="absolute inset-[23%] rounded-full border border-dashed border-purple-500/15 animate-[spin_9s_linear_infinite_reverse]" />
+          <div className="absolute inset-[14%] rounded-full border border-cyan-500/10 motion-safe:animate-[spin_12s_linear_infinite]" />
+          <div className="absolute inset-[23%] rounded-full border border-dashed border-purple-500/15 motion-safe:animate-[spin_9s_linear_infinite_reverse]" />
 
           {signals.map((signal, index) => (
             <React.Fragment key={signal.label}>
@@ -76,14 +77,14 @@ export default function About() {
                 style={{ background: `linear-gradient(90deg, transparent, ${signal.color}, transparent)` }}
               >
                 <span
-                  className="absolute left-1/2 -top-1 w-2 h-2 rounded-full animate-pulse"
+                  className="absolute left-1/2 -top-1 w-2 h-2 rounded-full motion-safe:animate-pulse"
                   style={{ backgroundColor: signal.color, boxShadow: `0 0 14px ${signal.color}` }}
                 />
               </div>
               <motion.div
                 className={`absolute ${signal.position} max-w-[150px]`}
-                animate={{ y: [0, index % 2 === 0 ? -5 : 5, 0] }}
-                transition={{ duration: 2.8 + index * 0.35, repeat: Infinity, ease: 'easeInOut' }}
+                animate={reduceMotion ? undefined : { y: [0, index % 2 === 0 ? -5 : 5, 0] }}
+                transition={reduceMotion ? undefined : { duration: 2.8 + index * 0.35, repeat: Infinity, ease: 'easeInOut' }}
               >
                 <div className="flex items-center gap-2 mb-1">
                   <span className="w-2 h-2 rounded-full" style={{ backgroundColor: signal.color, boxShadow: `0 0 12px ${signal.color}` }} />
@@ -95,7 +96,7 @@ export default function About() {
           ))}
 
           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center">
-            <div className="absolute w-44 h-44 rounded-full bg-cyan-500/5 blur-2xl animate-pulse" />
+            <div className="absolute w-44 h-44 rounded-full bg-cyan-500/5 blur-2xl motion-safe:animate-pulse" />
             <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-full border border-cyan-400/30 bg-[#0B0F19]/90 flex flex-col items-center justify-center text-center shadow-[0_0_55px_rgba(34,211,238,0.12)]">
               <span className="text-[10px] font-mono tracking-[0.2em] text-gray-500">CENTRAL SIGNAL</span>
               <span className="text-lg md:text-xl font-black text-white mt-2 leading-tight">SYSTEM<br />BUILDER</span>

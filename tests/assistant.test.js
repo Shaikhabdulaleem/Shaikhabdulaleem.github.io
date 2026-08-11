@@ -61,8 +61,54 @@ test('appointment request returns a direct booking action', () => {
 test('contact request returns direct calendar and WhatsApp actions', () => {
   const result = createDeterministicResponse('I want to contact Shaikh');
   assert.equal(result.action, 'contact');
+  assert.match(result.reply, /\+966511493209/);
   assert.ok(result.actions.some((action) => action.id === 'booking'));
   assert.ok(result.actions.some((action) => action.id === 'whatsapp' && action.href.includes('966511493209')));
+});
+
+test('start project begins discovery before showing contact routes', () => {
+  const result = createDeterministicResponse('Start a project');
+  assert.equal(result.action, 'discover');
+  assert.match(result.reply, /what would you like to build/i);
+  assert.equal(result.actions, undefined);
+});
+
+test('uses business context already provided for a software inquiry', () => {
+  const result = createDeterministicResponse('I need software for my construction company');
+  assert.equal(result.serviceId, 'saas');
+  assert.equal(result.state.stage, 'questions');
+  assert.doesNotMatch(result.reply, /what kind of business/i);
+  assert.match(result.reply, /Which part of the business/i);
+});
+
+test('routes a mobile application request to SaaS planning', () => {
+  const result = createDeterministicResponse('We need a mobile application');
+  assert.equal(result.serviceId, 'saas');
+  assert.equal(result.action, 'qualify');
+});
+
+test('does not present website development as a documented service', () => {
+  const result = createDeterministicResponse('I need a website for my company');
+  assert.equal(result.action, 'contact');
+  assert.match(result.reply, /not listed as a documented service/i);
+});
+
+test('explains that email is not an offered contact route', () => {
+  const result = createDeterministicResponse('What is your email address?');
+  assert.equal(result.action, 'contact');
+  assert.match(result.reply, /email address is not listed/i);
+});
+
+test('asks a useful discovery question for a broad business need', () => {
+  const result = createDeterministicResponse('I need help improving my business');
+  assert.equal(result.action, 'discover');
+  assert.match(result.reply, /main business problem/i);
+});
+
+test('does not repeat the business question when context is included', () => {
+  const result = createDeterministicResponse('I run a logistics company and need SaaS for operations');
+  assert.equal(result.state.stage, 'questions');
+  assert.doesNotMatch(result.reply, /what kind of business/i);
 });
 
 for (const question of [

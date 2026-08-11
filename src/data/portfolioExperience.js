@@ -62,7 +62,7 @@ export const PORTFOLIO_SERVICES = [
     description: 'Turn an idea or manual operation into a structured SaaS product with clear users, workflows, roles, priorities, and a practical delivery roadmap.',
     examples: ['Product roadmap', 'User roles', 'Feature architecture', 'MVP scope'],
     color: '#22d3ee',
-    patterns: /saas|platform|portal|product|mvp|\bapp\b|booking system|crm/i,
+    patterns: /saas|platform|portal|product|mvp|software|applications?|mobile app|web app|digital system|\bapp\b|booking system|crm/i,
     questions: [
       { key: 'problem', prompt: 'Which part of the business should the SaaS product improve or replace?', suggestions: ['Manual operations', 'Disconnected tools', 'Customer experience', 'New digital service'] },
       { key: 'users', prompt: 'Who will use it most, and what do those users need to accomplish?', suggestions: ['Internal team', 'Business customers', 'Consumers', 'Multiple user roles'] },
