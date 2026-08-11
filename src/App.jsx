@@ -1,7 +1,6 @@
 import React from 'react';
 import Navigation from './components/Navigation';
 import BrainExperience from './components/BrainExperience';
-import CaseStudyPreview from './components/CaseStudyPreview';
 import NeuralBackdrop from './components/NeuralBackdrop';
 import About from './components/About';
 import Capabilities from './components/Capabilities';
@@ -33,7 +32,6 @@ export default function App() {
       <Navigation />
       <main id="main-content" className="relative z-10">
         <BrainExperience />
-        <CaseStudyPreview />
         <About />
         <Capabilities />
         <DeliveryProcess />
