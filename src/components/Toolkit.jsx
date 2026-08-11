@@ -34,12 +34,6 @@ const CATEGORY_STYLES = [
     hub: 'bg-sky-400',
     glow: 'rgba(56,189,248,0.5)',
   },
-  {
-    color: 'emerald',
-    border: 'hover:border-emerald-500/40',
-    hub: 'bg-emerald-400',
-    glow: 'rgba(52,211,153,0.5)',
-  }
 ];
 
 const CATEGORIES = TOOLKIT_CATEGORIES.map((category, index) => ({ ...category, ...CATEGORY_STYLES[index] }));

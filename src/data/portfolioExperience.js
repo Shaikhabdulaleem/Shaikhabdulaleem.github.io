@@ -24,8 +24,7 @@ export const TOOLKIT_CATEGORIES = [
   { label: 'SaaS & Product Engineering', tools: ['React', 'Next.js', 'Supabase', 'PostgreSQL', 'Tailwind CSS'] },
   { label: 'Custom Development', tools: ['Node.js', 'REST APIs', 'GraphQL', 'Zapier', 'Make (Integromat)'] },
   { label: 'Operations & ERP', tools: ['Notion', 'Airtable', 'ClickUp', 'Jira', 'Google Workspace'] },
-  { label: 'Analytics & BI', tools: ['Power BI', 'Google Looker Studio', 'Excel', 'BigQuery', 'Metabase'] },
-  { label: 'Valuation Technology', tools: ['TAQEEM Workflows', 'IVS Standards', 'Excel Macros', 'Power BI', 'PDF Automation'] }
+  { label: 'Analytics & BI', tools: ['Power BI', 'Google Looker Studio', 'Excel', 'BigQuery', 'Metabase'] }
 ];
 
 export const SOCIAL_PROFILES = [

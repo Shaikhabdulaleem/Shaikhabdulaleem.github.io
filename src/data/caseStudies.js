@@ -2,7 +2,7 @@ export const caseStudies = [
   {
     id: 1,
     title: 'Valuation Management Modules',
-    tag: 'Valuation Technology',
+    tag: 'Operations System',
     challenge: 'Multiple valuation categories relied on repeated proposal preparation, manual formatting, and disconnected review steps.',
     solution: 'A structured system covering the journey from proposal creation and category-specific data capture through internal review and final TAQEEM approval report preparation.',
     workflow: ['Client request', 'Proposal', 'Valuation', 'Review', 'Final report'],
