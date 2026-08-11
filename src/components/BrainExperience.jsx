@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { caseStudies } from '../data/caseStudies';
-import { BOOKING_URL, buildWhatsAppUrl } from '../data/portfolioExperience';
 import { openPortfolioChat } from './PortfolioChat';
 
 /*
@@ -14,7 +13,6 @@ import { openPortfolioChat } from './PortfolioChat';
  */
 
 const EMBER_COLORS = ['#fbbf24', '#f59e0b', '#ef4444', '#fb7185'];
-const HERO_WHATSAPP_URL = buildWhatsAppUrl('Hi Shaikh, I visited your portfolio and would like to discuss a digital project.');
 
 /* ------------------------------------------------------------------ */
 /* 3D brain point cloud: two wrinkled hemispheres + cerebellum + stem  */
@@ -673,22 +671,16 @@ export default function BrainExperience() {
               >
                 Shaikh Abdul Aleem helps growing businesses turn manual processes, scattered data, and early digital ideas into structured systems they can manage, measure, and scale.
               </motion.p>
-              <motion.div
+              <motion.button
+                type="button"
+                onClick={() => openPortfolioChat()}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.05, duration: 0.6 }}
-                className="pointer-events-auto mx-auto mt-6 flex max-w-xl flex-wrap justify-center gap-3"
+                className="pointer-events-auto mt-4 inline-flex min-h-9 items-center rounded-full border border-cyan-400/30 bg-[#0B1020]/60 px-3.5 text-xs font-medium text-cyan-200/90 transition-colors hover:border-cyan-300/60 hover:text-white"
               >
-                <a href={HERO_WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center justify-center rounded-xl bg-emerald-500 px-4 text-sm font-semibold text-slate-950 transition-colors hover:bg-emerald-400">
-                  Discuss on WhatsApp
-                </a>
-                <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center justify-center rounded-xl border border-purple-300/45 bg-purple-500/15 px-4 text-sm font-semibold text-purple-100 transition-colors hover:bg-purple-500/25">
-                  Book a Google Meet
-                </a>
-              </motion.div>
-              <button type="button" onClick={() => openPortfolioChat()} className="pointer-events-auto mt-4 text-xs font-semibold text-cyan-200 underline decoration-cyan-400/50 underline-offset-4 transition-colors hover:text-white">
-                Prefer to shape the need first? Use the project assistant.
-              </button>
+                Chat with AI Assistant <span aria-hidden="true" className="ml-1.5">→</span>
+              </motion.button>
             </div>
 
             {/* clickable brain hotspot */}
