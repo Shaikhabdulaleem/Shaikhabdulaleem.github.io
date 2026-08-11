@@ -47,3 +47,11 @@ test('health reports deterministic readiness independently', async () => {
   const response = await request(createApp({ env: {}, provider: downProvider })).get('/api/health');
   assert.deepEqual(response.body, { status: 'ok', deterministic: true, ollama: false });
 });
+
+test('server applies production security headers', async () => {
+  const response = await request(createApp({ env: {}, provider: downProvider })).get('/api/health');
+  assert.match(response.headers['content-security-policy'], /default-src 'self'/);
+  assert.equal(response.headers['x-content-type-options'], 'nosniff');
+  assert.equal(response.headers['referrer-policy'], 'strict-origin-when-cross-origin');
+  assert.equal(response.headers['x-powered-by'], undefined);
+});

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://shaikhabdulaleem.github.io/sitemap.xml

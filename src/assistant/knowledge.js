@@ -61,7 +61,7 @@ export const knowledgeEntries = [
     id: 'contact',
     type: 'contact',
     title: 'Contact and booking options',
-    content: `Visitors can submit a project brief, continue on WhatsApp, book a 60-minute Google Meet discovery call, or connect through LinkedIn and Upwork. Booking: ${BOOKING_URL}. LinkedIn: ${LINKEDIN_URL}. Upwork: ${UPWORK_URL}.`,
+    content: `Visitors can shape a project brief with the assistant, continue on WhatsApp, book a 60-minute Google Meet discovery call, or connect through LinkedIn and Upwork. Booking: ${BOOKING_URL}. LinkedIn: ${LINKEDIN_URL}. Upwork: ${UPWORK_URL}.`,
     href: '#contact',
     keywords: ['contact', 'book', 'call', 'meet', 'whatsapp', 'linkedin', 'upwork', 'hire', 'start']
   }

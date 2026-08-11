@@ -1,6 +1,8 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import compression from 'compression';
 import express from 'express';
+import helmet from 'helmet';
 import { createDeterministicResponse } from '../src/assistant/deterministic.js';
 import { validateEnhancedReply } from './grounding.js';
 import { createOllamaProvider } from './providers/ollama.js';
@@ -37,6 +39,23 @@ export function createApp({ env = process.env, provider = createOllamaProvider(e
   const app = express();
   app.disable('x-powered-by');
   app.set('trust proxy', 1);
+  app.use(helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'"],
+        styleSrc: ["'self'", "'unsafe-inline'"],
+        imgSrc: ["'self'", 'data:'],
+        connectSrc: ["'self'"],
+        fontSrc: ["'self'", 'data:'],
+        objectSrc: ["'none'"],
+        baseUri: ["'self'"],
+        frameAncestors: ["'none'"]
+      }
+    },
+    referrerPolicy: { policy: 'strict-origin-when-cross-origin' }
+  }));
+  app.use(compression());
   app.use(express.json({ limit: env.MAX_JSON_SIZE || '32kb' }));
   app.use('/api', sameOriginGuard(env), createRateLimiter({ max: Number(env.RATE_LIMIT_PER_MINUTE) || 30 }));
 
@@ -71,8 +90,12 @@ export function createApp({ env = process.env, provider = createOllamaProvider(e
   });
 
   if (env.NODE_ENV === 'production') {
+    app.use('/assets', express.static(path.join(distPath, 'assets'), { immutable: true, maxAge: '1y' }));
     app.use(express.static(distPath, { index: false }));
-    app.get('*path', (_req, res) => res.sendFile(path.join(distPath, 'index.html')));
+    app.get('*path', (_req, res) => {
+      res.setHeader('Cache-Control', 'no-cache');
+      res.sendFile(path.join(distPath, 'index.html'));
+    });
   }
   return app;
 }

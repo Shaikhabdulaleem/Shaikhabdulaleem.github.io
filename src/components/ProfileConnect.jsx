@@ -4,9 +4,9 @@ import SectionHeader from './SectionHeader';
 import { SOCIAL_PROFILES } from '../data/portfolioExperience';
 
 const POSES = {
-  neutral: '/profile-connect/abdul-neutral.webp',
-  upwork: '/profile-connect/abdul-upwork.webp',
-  linkedin: '/profile-connect/abdul-linkedin.webp'
+  neutral: '/profile-connect/shaikh-neutral.webp',
+  upwork: '/profile-connect/shaikh-upwork.webp',
+  linkedin: '/profile-connect/shaikh-linkedin.webp'
 };
 
 const POSE_MASKS = {

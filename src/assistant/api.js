@@ -1,4 +1,10 @@
+import { createDeterministicResponse } from './deterministic.js';
+
 export async function requestAssistant(message, history, state, signal) {
+  if (import.meta.env.VITE_STATIC_HOSTING === 'true') {
+    return { ...createDeterministicResponse(message, state), mode: 'deterministic' };
+  }
+
   const response = await fetch('/api/chat', {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
