@@ -36,16 +36,16 @@ const CATEGORY_STYLES = [
   },
 ];
 
-const CATEGORIES = TOOLKIT_CATEGORIES.map((category, index) => ({ ...category, ...CATEGORY_STYLES[index] }));
+const CATEGORIES = TOOLKIT_CATEGORIES.map((category, index) => ({ ...category, tools: category.tools.slice(0, 4), ...CATEGORY_STYLES[index] }));
 
 export default function Toolkit() {
   return (
     <section id="toolkit" className="relative max-w-7xl mx-auto px-6 py-24 border-t border-gray-900/80">
       <SectionHeader
-        kicker="Toolkit"
-        title="Tools chosen for"
-        highlight="the job."
-        sub="A practical toolkit for product planning, automation, AI, analytics, and delivery."
+        kicker="Tools I Use"
+        title="Practical tools for"
+        highlight="better systems."
+        sub="A focused toolkit for product planning, automation, AI, analytics, and delivery."
       />
 
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">

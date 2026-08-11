@@ -1,6 +1,5 @@
 import React from 'react';
 import SectionHeader from './SectionHeader';
-import { openPortfolioChat } from './PortfolioChat';
 
 const questions = [
   {
@@ -15,10 +14,6 @@ const questions = [
     question: 'Can we discuss an existing digital project?',
     answer: 'Yes. The documented delivery approach covers requirements, scope, roles, testing, coordination, and handover for projects that need more structure.'
   },
-  {
-    question: 'What happens after I describe my need?',
-    answer: 'The project assistant helps turn the need into a concise brief. You can then continue manually on WhatsApp or choose a Google Meet time—nothing is sent automatically from this portfolio.'
-  }
 ];
 
 export default function ClientFAQ() {
@@ -43,11 +38,6 @@ export default function ClientFAQ() {
               <p className="border-t border-gray-800 pb-5 pt-4 text-sm leading-relaxed text-gray-400">{item.answer}</p>
             </details>
           ))}
-        </div>
-        <div className="mt-8 text-center">
-          <button type="button" onClick={() => openPortfolioChat()} className="min-h-11 rounded-xl border border-cyan-400/35 bg-cyan-500/10 px-5 text-sm font-semibold text-cyan-100 transition-colors hover:bg-cyan-500/20">
-            Ask a project question
-          </button>
         </div>
       </div>
     </section>

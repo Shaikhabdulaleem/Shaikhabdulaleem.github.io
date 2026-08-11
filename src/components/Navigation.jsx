@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 const NAV_ITEMS = [
   { label: 'Services', href: '#services' },
-  { label: 'Toolkit', href: '#toolkit' },
+  { label: 'Tools', href: '#toolkit' },
   { label: 'Contact', href: '#contact' }
 ];
 

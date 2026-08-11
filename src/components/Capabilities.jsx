@@ -34,7 +34,7 @@ function ServiceDetail({ service }) {
         aria-live="polite"
       >
         <span className="absolute -left-[5px] top-0 w-2 h-2 rounded-full" style={{ backgroundColor: service.color, boxShadow: `0 0 16px ${service.color}` }} />
-        <span className="text-[10px] font-mono tracking-[0.24em] text-gray-500">SIGNAL // {service.code}</span>
+        <span className="text-[10px] font-mono tracking-[0.24em] text-gray-500">SERVICE // {service.code}</span>
         <h3 className="text-2xl md:text-3xl font-black text-white mt-3">{service.title}</h3>
         <p className="text-sm font-medium mt-2" style={{ color: service.color }}>{service.short}</p>
         <p className="text-sm text-gray-400 leading-relaxed mt-5">{service.description}</p>
@@ -52,7 +52,7 @@ function ServiceDetail({ service }) {
           className="group mt-8 inline-flex items-center gap-3 text-xs font-semibold text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"
         >
           <span className="w-9 h-9 rounded-full border flex items-center justify-center transition-transform group-hover:scale-110" style={{ borderColor: `${service.color}80`, color: service.color }}>+</span>
-          Tell the assistant about this project
+          Discuss this service with the assistant
         </button>
       </motion.div>
     </AnimatePresence>
@@ -67,10 +67,10 @@ export default function Capabilities() {
   return (
     <section id="services" className="relative max-w-7xl mx-auto px-6 py-24 border-t border-gray-900/80 scroll-mt-24">
       <SectionHeader
-        kicker="Core Expertise"
-        title="Route the need to"
-        highlight="the right signal."
-        sub="Select the business need closest to yours. The network will isolate the capability and show how it can move forward."
+        kicker="Services"
+        title="Find the right"
+        highlight="solution."
+        sub="Select the business need closest to yours to see the relevant service, typical deliverables, and best fit."
       />
 
       <div className="hidden md:grid md:grid-cols-[minmax(0,1.15fr)_minmax(330px,0.85fr)] gap-16 items-center min-h-[560px]">
@@ -100,7 +100,7 @@ export default function Capabilities() {
 
             <div className="relative -translate-x-1/2 -translate-y-1/2 w-40 h-40 rounded-full border border-cyan-500/25 bg-[#0B0F19]/95 flex flex-col items-center justify-center text-center shadow-[0_0_70px_rgba(34,211,238,0.1)]">
               <div className="absolute inset-3 rounded-full border border-dashed border-purple-400/15 motion-safe:animate-[spin_9s_linear_infinite]" />
-              <span className="relative text-[9px] font-mono tracking-[0.18em] text-gray-500">ROUTER CORE</span>
+              <span className="relative text-[9px] font-mono tracking-[0.18em] text-gray-500">START HERE</span>
               <span className="relative text-base font-black text-white mt-2 leading-tight">YOUR<br />BUSINESS NEED</span>
               <span className="relative mt-3 h-2 w-2 rounded-full bg-cyan-300 shadow-[0_0_14px_#67e8f9] motion-safe:animate-pulse" />
             </div>
@@ -138,7 +138,7 @@ export default function Capabilities() {
                 </span>
                 <span>
                   <span className={`block text-xs font-bold transition-colors ${active ? 'text-white' : 'text-gray-500 group-hover:text-gray-300'}`}>{service.title}</span>
-                  <span className="block text-[9px] font-mono tracking-wider text-gray-700 mt-1">SELECT SIGNAL</span>
+                  <span className="block text-[9px] font-mono tracking-wider text-gray-700 mt-1">VIEW SERVICE</span>
                 </span>
               </button>
             );

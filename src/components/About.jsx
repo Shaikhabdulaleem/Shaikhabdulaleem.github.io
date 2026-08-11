@@ -39,22 +39,21 @@ export default function About() {
           className="lg:col-span-6"
         >
           <SectionHeader
-            kicker="Behind the brain"
-            title="The mind wiring"
-            highlight="the systems."
+            kicker="About Shaikh"
+            title="Systems built around"
+            highlight="the business."
           />
           <div className="space-y-5 text-sm text-gray-300 font-light leading-relaxed max-w-2xl -mt-6">
             <p>
               I'm <span className="text-white font-medium">Shaikh Abdul Aleem</span>, a digital transformation
-              consultant helping growing businesses replace manual, scattered processes with structured digital
-              systems they can manage, measure, and scale.
+              consultant who turns business needs into clear system requirements and practical delivery plans.
             </p>
             <p>
-              I work at the intersection of operational thinking and practical technology. The goal is not to add
-              another tool; it is to make the business easier to run, understand, and improve.
+              I begin with how the work happens today, identify where it slows down, then design a practical path
+              forward with the right people, process, and technology in mind.
             </p>
             <p className="border-l border-cyan-400/50 pl-4 text-cyan-100/80">
-              Every engagement connects three signals: what the business needs, what the system must do, and how the team will deliver it.
+              Every engagement connects three essentials: what the business needs, what the system must do, and how the team will use it.
             </p>
           </div>
         </motion.div>
@@ -98,7 +97,7 @@ export default function About() {
           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center">
             <div className="absolute w-44 h-44 rounded-full bg-cyan-500/5 blur-2xl motion-safe:animate-pulse" />
             <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-full border border-cyan-400/30 bg-[#0B0F19]/90 flex flex-col items-center justify-center text-center shadow-[0_0_55px_rgba(34,211,238,0.12)]">
-              <span className="text-[10px] font-mono tracking-[0.2em] text-gray-500">CENTRAL SIGNAL</span>
+              <span className="text-[10px] font-mono tracking-[0.2em] text-gray-500">WORKING APPROACH</span>
               <span className="text-lg md:text-xl font-black text-white mt-2 leading-tight">SYSTEM<br />BUILDER</span>
               <span className="w-8 h-px bg-gradient-to-r from-cyan-400 to-purple-400 mt-3" />
             </div>

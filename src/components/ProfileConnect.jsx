@@ -138,11 +138,11 @@ export default function ProfileConnect() {
       <div className="relative mx-auto max-w-7xl px-3 sm:px-6">
         <div id="connect-title">
           <SectionHeader
-            kicker="Profile Signal"
+            kicker="Professional Profiles"
             kickerColor="text-emerald-400"
-            title="Choose where to"
-            highlight="connect."
-            sub="Hover a platform and I’ll meet you there. Each signal opens my verified professional profile in a new tab."
+            title="Connect with"
+            highlight="Shaikh."
+            sub="Open a verified professional profile in a new tab."
             center
           />
         </div>
@@ -213,7 +213,7 @@ export default function ProfileConnect() {
           </div>
 
           <div className="absolute bottom-1 left-1/2 z-20 -translate-x-1/2 whitespace-nowrap rounded-full border border-white/10 bg-[#070A12]/75 px-4 py-2 text-[9px] font-mono uppercase tracking-[0.22em] text-gray-500 backdrop-blur-md sm:bottom-3">
-            {pose === 'neutral' ? 'Awaiting profile signal' : `Routing to ${pose}`}
+            {pose === 'neutral' ? 'Choose a profile' : 'Profile selected'}
           </div>
         </div>
       </div>

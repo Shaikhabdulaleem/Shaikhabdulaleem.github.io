@@ -652,7 +652,7 @@ export default function BrainExperience() {
                 transition={{ delay: 0.3, duration: 0.7 }}
                 className="text-[11px] md:text-xs font-mono uppercase tracking-[0.35em] text-cyan-400"
               >
-                SHAIKH ABDUL ALEEM · DIGITAL TRANSFORMATION CONSULTANT
+                DIGITAL TRANSFORMATION CONSULTANT
               </motion.p>
               <motion.h1
                 initial={{ opacity: 0, y: 16 }}
@@ -737,8 +737,8 @@ export default function BrainExperience() {
           >
             <div className="absolute top-[8%] left-0 right-0 text-center px-6 pointer-events-none">
               <span className="text-[11px] font-mono uppercase tracking-[0.3em] text-purple-400">Neural Project Grid</span>
-              <h2 className="text-2xl md:text-4xl font-bold text-white mt-2">Every project is a part of my brain.</h2>
-              <p className="text-xs md:text-sm text-gray-400 mt-2">Each neuron holds one — click it to open the case study.</p>
+              <h2 className="text-2xl md:text-4xl font-bold text-white mt-2">Documented projects</h2>
+              <p className="text-xs md:text-sm text-gray-400 mt-2">Choose a project to view its challenge, approach, workflow, and outcome.</p>
             </div>
 
             {caseStudies.map((study, i) => (

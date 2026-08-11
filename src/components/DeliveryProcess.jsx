@@ -27,11 +27,11 @@ export default function DeliveryProcess() {
     <section id="process" className="relative bg-[#070A12]/70 py-24 border-y border-gray-900/80 scroll-mt-24">
       <div className="max-w-7xl mx-auto px-6">
         <SectionHeader
-          kicker="Execution Framework"
+          kicker="How I Work"
           kickerColor="text-purple-400"
-          title="One signal,"
-          highlight="six synapses."
-          sub="Every engagement travels the same nerve fiber — from first understanding to structured handover."
+          title="From first conversation to"
+          highlight="handover."
+          sub="A clear delivery process that moves from understanding the need to testing, handover, and support."
           center
         />
 

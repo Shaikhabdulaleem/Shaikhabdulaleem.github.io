@@ -11,8 +11,8 @@ const DIRECT_WHATSAPP_URL = buildWhatsAppUrl(
 const handoffSteps = [
   {
     code: '01',
-    label: 'SHAPE THE SIGNAL',
-    title: 'Describe the project',
+    label: 'PROJECT BRIEF',
+    title: 'Describe your need',
     detail: 'Let the assistant ask the right questions and turn the idea into a useful brief.',
     color: '#22d3ee',
     action: 'Start project chat',
@@ -20,7 +20,7 @@ const handoffSteps = [
   },
   {
     code: '02',
-    label: 'GO HUMAN',
+    label: 'WHATSAPP',
     title: 'Continue on WhatsApp',
     detail: 'Move into a live conversation with Shaikh when you are ready to discuss the work.',
     color: '#34d399',
@@ -29,7 +29,7 @@ const handoffSteps = [
   },
   {
     code: '03',
-    label: 'LOCK THE TIME',
+    label: 'GOOGLE MEET',
     title: 'Book a discovery call',
     detail: 'Choose a Google Meet slot shown in your own timezone.',
     color: '#c084fc',
@@ -70,11 +70,11 @@ export default function Contact() {
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[70vw] h-64 bg-cyan-500/5 blur-[110px] pointer-events-none" />
       <div className="relative max-w-7xl mx-auto px-6">
         <SectionHeader
-          kicker="Handoff Station"
+          kicker="Start a Conversation"
           kickerColor="text-purple-400"
-          title="From project signal to"
-          highlight="human conversation."
-          sub="Start with clarity, continue live, or reserve focused time. Choose the route that fits where you are now."
+          title="Choose how you'd like to"
+          highlight="connect."
+          sub="Start with a project brief, continue on WhatsApp, or book a focused Google Meet conversation."
           center
         />
 
@@ -121,19 +121,6 @@ export default function Contact() {
           </div>
         </div>
 
-        <div className="mt-24 pt-8 border-t border-gray-900 flex flex-col md:flex-row items-start md:items-end justify-between gap-8">
-          <div>
-            <span className="text-[10px] font-mono tracking-[0.24em] text-gray-600">DISCOVERY SESSION</span>
-            <div className="flex items-end gap-3 mt-2">
-              <span className="text-5xl md:text-6xl font-black tracking-tighter text-white">BOOK</span>
-              <span className="pb-2 text-sm font-mono text-purple-300">GOOGLE MEET</span>
-            </div>
-          </div>
-          <div className="max-w-sm md:text-right">
-            <span className="text-[10px] font-mono tracking-[0.18em] text-gray-600">WHAT HAPPENS NEXT</span>
-            <p className="mt-2 text-sm leading-relaxed text-gray-400">Choose the contact route that suits you, share the business need, then continue manually on WhatsApp or in a booked Google Meet. This portfolio does not send messages automatically.</p>
-          </div>
-        </div>
       </div>
     </section>
   );
