@@ -48,10 +48,10 @@ export default function Toolkit() {
   return (
     <section id="toolkit" className="relative max-w-7xl mx-auto px-6 py-24 border-t border-gray-900/80">
       <SectionHeader
-        kicker="Stack Architecture"
-        title="A connected"
-        highlight="tool constellation."
-        sub="Every node wired to a hub — six system clusters, one coherent stack."
+        kicker="Toolkit"
+        title="Tools chosen for"
+        highlight="the job."
+        sub="A practical toolkit for product planning, automation, AI, analytics, and delivery."
       />
 
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
