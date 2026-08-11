@@ -363,7 +363,7 @@ export default function BrainExperience() {
         const baseScale = Math.min(W * 0.25, H * 0.31);
         const scale = baseScale * (1 + burstAge * 1.15);
         const cx = W / 2;
-        const cy = H * 0.55 + (reducedMotion ? 0 : Math.sin(t * 0.85) * 5);
+        const cy = H * 0.6 + (reducedMotion ? 0 : Math.sin(t * 0.85) * 5);
 
         const projected = brain.pts.map((point) => {
           const rx = point.x * cos + point.z * sin;
@@ -565,7 +565,7 @@ export default function BrainExperience() {
       if (st === 'burst') {
         const burstAge = Math.min((performance.now() - burstStartRef.current) / 900, 1);
         const cx = W / 2;
-        const cy = H * 0.55;
+        const cy = H * 0.6;
         ctx.globalCompositeOperation = 'lighter';
         for (let k = 0; k < 3; k++) {
           const radius = burstAge * (H * 0.7) + k * 40;
@@ -671,16 +671,6 @@ export default function BrainExperience() {
               >
                 Shaikh Abdul Aleem helps growing businesses turn manual processes, scattered data, and early digital ideas into structured systems they can manage, measure, and scale.
               </motion.p>
-              <motion.button
-                type="button"
-                onClick={() => openPortfolioChat()}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1.05, duration: 0.6 }}
-                className="pointer-events-auto mt-4 inline-flex min-h-9 items-center rounded-full border border-cyan-400/30 bg-[#0B1020]/60 px-3.5 text-xs font-medium text-cyan-200/90 transition-colors hover:border-cyan-300/60 hover:text-white"
-              >
-                Chat with AI Assistant <span aria-hidden="true" className="ml-1.5">→</span>
-              </motion.button>
             </div>
 
             {/* clickable brain hotspot */}
@@ -694,7 +684,7 @@ export default function BrainExperience() {
                 }
               }}
               aria-label="Explore documented case studies"
-              className="absolute left-1/2 top-[55%] -translate-x-1/2 -translate-y-1/2 w-[52vmin] h-[46vmin] cursor-pointer rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 focus-visible:ring-offset-4 focus-visible:ring-offset-[#05070D]"
+              className="absolute left-1/2 top-[60%] -translate-x-1/2 -translate-y-1/2 w-[52vmin] h-[46vmin] cursor-pointer rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 focus-visible:ring-offset-4 focus-visible:ring-offset-[#05070D]"
               title="Explore documented case studies"
             />
 
@@ -704,7 +694,7 @@ export default function BrainExperience() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1, x: [30, 0, 0, 30], y: [40, 0, 0, 40], scale: [1, 1, 0.82, 1] }}
                 transition={{ delay: 1.4, duration: 2.6, repeat: Infinity, times: [0, 0.4, 0.55, 1] }}
-                className="absolute left-[56%] top-[60%] z-20 pointer-events-none text-white"
+                className="absolute left-[56%] top-[65%] z-20 pointer-events-none text-white"
               >
                 <svg width="26" height="26" viewBox="0 0 24 24" fill="white" stroke="black" strokeWidth="1">
                   <path d="M4 2 L20 12 L12 13.5 L16 21 L13 22.5 L9.5 15 L4 19 Z" />
@@ -717,11 +707,11 @@ export default function BrainExperience() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.2, duration: 0.6 }}
-              className="absolute bottom-[8%] left-0 right-0 flex justify-center pointer-events-none"
+              className="pointer-events-none absolute bottom-3 left-0 right-0 flex justify-center"
             >
-              <span className="px-5 py-2.5 rounded-full border border-cyan-500/40 bg-cyan-950/50 backdrop-blur-sm text-xs md:text-sm font-mono text-cyan-300 motion-safe:animate-pulse tracking-wide">
-                ⬢ Explore documented case studies
-              </span>
+              <button type="button" onClick={() => openPortfolioChat()} className="pointer-events-auto rounded-full border border-cyan-500/40 bg-cyan-950/50 px-5 py-2.5 text-xs font-mono tracking-wide text-cyan-300 backdrop-blur-sm transition-colors hover:border-cyan-300 hover:text-cyan-100 md:text-sm">
+                Chat with AI Assistant <span aria-hidden="true" className="ml-1.5">→</span>
+              </button>
             </motion.div>
           </motion.div>
         )}
