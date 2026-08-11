@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  background-color: #0B0F19;
+  overflow-x: hidden;
+}
+
+.portfolio-chat-scrollbar {
+  scrollbar-color: rgba(103, 232, 249, 0.35) transparent;
+  scrollbar-width: thin;
+}
+
+.portfolio-chat-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.portfolio-chat-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.portfolio-chat-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(103, 232, 249, 0.3);
+  border-radius: 999px;
+}
+
+.portfolio-chat-suggestions {
+  scrollbar-width: none;
+}
+
+.portfolio-chat-suggestions::-webkit-scrollbar {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .ambient-mobile-hidden {
+    display: none;
+  }
+}
+
+/* Optimize canvas rendering layer performance across mobile viewports */
+canvas {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
