@@ -872,8 +872,7 @@ export default function BrainExperience() {
                 )}
 
                 <div className="mt-5 pt-4 border-t border-gray-900 flex flex-wrap gap-3 justify-between items-center">
-                  <span className="text-[10px] font-mono text-gray-600 tracking-widest">ENG // 0{activeStudy.id} · NEURAL ARCHIVE</span>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 order-2 sm:order-none">
                     {activeStudy.liveUrl && (
                       <a
                         href={activeStudy.liveUrl}
@@ -891,6 +890,7 @@ export default function BrainExperience() {
                       Return to Project Grid
                     </button>
                   </div>
+                  <span className="text-[10px] font-mono text-gray-600 tracking-widest order-1 sm:order-none">ENG // 0{activeStudy.id} · NEURAL ARCHIVE</span>
                 </div>
               </div>
             </div>
