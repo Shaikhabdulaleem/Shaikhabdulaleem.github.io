@@ -282,12 +282,13 @@ export default function BrainExperience() {
     let inViewport = false;
     let pageVisible = document.visibilityState === 'visible';
     const mobile = window.matchMedia('(max-width: 768px)').matches;
-    const frameInterval = reducedMotion ? 250 : 1000 / (mobile ? 18 : 24);
+    const frameInterval = reducedMotion ? 250 : 1000 / (mobile ? 30 : 60);
 
     let embers = [];
     let streams = [];
     const brain = buildBrainCloud();
     const brainSignals = buildSignalRoutes(brain, mobile ? 4 : 6);
+    let glowCache = null; // cached rotation-independent aura/tissue gradients, keyed by scale
 
     const layout = () => {
       W = canvas.width = canvas.offsetWidth;
@@ -310,6 +311,8 @@ export default function BrainExperience() {
         phase: Math.random() * Math.PI * 2,
         hue: Math.random() < 0.5 ? '139, 92, 246' : '59, 130, 246'
       }));
+
+      glowCache = null; // size changed — rebuild cached gradients on next frame
     };
 
     layout();
@@ -379,26 +382,35 @@ export default function BrainExperience() {
           };
         });
 
-        const aura = ctx.createRadialGradient(cx, cy, scale * 0.05, cx, cy, scale * 1.45);
-        aura.addColorStop(0, `rgba(56, 189, 248, ${0.12 * brainAlpha})`);
-        aura.addColorStop(0.48, `rgba(37, 99, 235, ${0.055 * brainAlpha})`);
-        aura.addColorStop(1, 'rgba(5, 7, 13, 0)');
-        ctx.fillStyle = aura;
+        // Aura + tissue glows are rotation-independent, so cache the gradients per scale
+        // instead of rebuilding them every frame; brainAlpha is applied via globalAlpha.
+        const gcy = H * 0.6; // fixed glow centre — the ±5px point-cloud bob is invisible here
+        if (!glowCache || glowCache.scale !== scale) {
+          const aura = ctx.createRadialGradient(cx, gcy, scale * 0.05, cx, gcy, scale * 1.45);
+          aura.addColorStop(0, 'rgba(56, 189, 248, 0.12)');
+          aura.addColorStop(0.48, 'rgba(37, 99, 235, 0.055)');
+          aura.addColorStop(1, 'rgba(5, 7, 13, 0)');
+          const tissue = ctx.createRadialGradient(cx - scale * 0.22, gcy - scale * 0.2, scale * 0.08, cx, gcy, scale * 1.08);
+          tissue.addColorStop(0, 'rgba(165, 243, 252, 0.12)');
+          tissue.addColorStop(0.48, 'rgba(37, 99, 235, 0.055)');
+          tissue.addColorStop(0.82, 'rgba(76, 29, 149, 0.035)');
+          tissue.addColorStop(1, 'rgba(2, 6, 23, 0)');
+          glowCache = { scale, aura, tissue };
+        }
+        ctx.save();
+        ctx.globalAlpha = brainAlpha;
+        ctx.fillStyle = glowCache.aura;
         ctx.beginPath();
-        ctx.arc(cx, cy, scale * 1.45, 0, Math.PI * 2);
+        ctx.arc(cx, gcy, scale * 1.45, 0, Math.PI * 2);
         ctx.fill();
+        ctx.restore();
 
         // Layered translucent tissue gives the point cloud an anatomical volume.
         ctx.save();
         ctx.globalAlpha = brainAlpha;
-        const tissue = ctx.createRadialGradient(cx - scale * 0.22, cy - scale * 0.2, scale * 0.08, cx, cy, scale * 1.08);
-        tissue.addColorStop(0, 'rgba(165, 243, 252, 0.12)');
-        tissue.addColorStop(0.48, 'rgba(37, 99, 235, 0.055)');
-        tissue.addColorStop(0.82, 'rgba(76, 29, 149, 0.035)');
-        tissue.addColorStop(1, 'rgba(2, 6, 23, 0)');
-        ctx.fillStyle = tissue;
+        ctx.fillStyle = glowCache.tissue;
         ctx.beginPath();
-        ctx.ellipse(cx, cy - scale * 0.03, scale * 1.13, scale * 0.83, -0.035, 0, Math.PI * 2);
+        ctx.ellipse(cx, gcy - scale * 0.03, scale * 1.13, scale * 0.83, -0.035, 0, Math.PI * 2);
         ctx.fill();
 
         const hemisphereSeparation = Math.max(scale * 0.035, Math.abs(sin) * scale * 0.2);
