@@ -14,7 +14,7 @@ export const caseStudies = [
     solution: 'A structured system covering the journey from proposal creation and category-specific data capture through internal review and final TAQEEM approval report preparation.',
     workflow: ['Client request', 'Proposal', 'Valuation', 'Review', 'Final report'],
     outcome: 'Improved process control, reduced repeated report preparation, and created a scalable valuation workflow.',
-    liveUrl: 'https://www.figma.com/make/vw2gszwCuk3FxZJ9VJdbzC/Design-Valuation-System?p=f&t=NTzgQQKFP6bTkWFV-0',
+    liveUrl: 'https://www.figma.com/make/vw2gszwCuk3FxZJ9VJdbzC/Design-Valuation-System?code-node-id=0-9&p=f&t=RzDuYLd6iGo8qPSm-0&fullscreen=1',
     images: []
   },
   {
@@ -25,7 +25,7 @@ export const caseStudies = [
     solution: 'An AI-supported operating flow connecting guided customer assistance, equipment schedules, reusable proposal layouts, and management dashboards.',
     workflow: ['Inquiry', 'AI guidance', 'Schedule', 'Proposal', 'Dashboard'],
     outcome: 'Improved support responsiveness, equipment planning, proposal consistency, and management visibility.',
-    liveUrl: 'https://www.figma.com/make/00697bwkaLOl2Abh6XM8MS/B2B-CRM-for-Equipment-Rental?p=f&t=TKeil5PRh00cwzzG-0',
+    liveUrl: 'https://www.figma.com/make/00697bwkaLOl2Abh6XM8MS/B2B-CRM-for-Equipment-Rental?code-node-id=0-6&p=f&t=4DE9P2sckTUl1sWm-0&fullscreen=1',
     images: []
   },
   {
@@ -46,7 +46,7 @@ export const caseStudies = [
     solution: 'A complete salon suite covering the counter flow — cart with live offers and tax, multiple payment methods, printable token and receipts with loyalty, and a real-time analytics module for revenue, cash, and discounts.',
     workflow: ['Booking', 'Cart & offers', 'Payment', 'Receipt & loyalty', 'Live analytics'],
     outcome: 'One platform for the full counter-to-analytics flow across gents and ladies salons, with live daily revenue visibility.',
-    liveUrl: 'https://www.figma.com/make/DM4Kw5ODsaIKzNWC6OM9O7/Salon-Management-System-Prototype?p=f&t=cEHtHTVTP7IFRfG2-0',
+    liveUrl: 'https://www.figma.com/make/DM4Kw5ODsaIKzNWC6OM9O7/Salon-Management-System-Prototype?code-node-id=0-6&p=f&t=8g99xZwL2A12DZeo-0&fullscreen=1',
     images: []
   },
   {
@@ -57,7 +57,7 @@ export const caseStudies = [
     solution: 'A multi-tenant console with per-tenant revenue vs. expenses, integration cost tracking with inline editing and on/off toggles, and net profit and margin per client at a glance.',
     workflow: ['Add tenant', 'Connect integrations', 'Track costs', 'Revenue vs expenses', 'Profit & margin'],
     outcome: 'Instant per-client profitability visibility and a single console for managing integrations across every tenant.',
-    liveUrl: 'https://www.figma.com/make/NyDWphqH0rGhHNDVO8vTIQ/SaaS-System-Design?p=f&t=cawfQyQmkacqFe9v-0',
+    liveUrl: 'https://www.figma.com/make/NyDWphqH0rGhHNDVO8vTIQ/SaaS-System-Design?code-node-id=0-9&p=f&t=psyvlHymxynJWIFk-0&fullscreen=1&preview-route=%2Flogin',
     images: []
   },
   {
@@ -68,7 +68,7 @@ export const caseStudies = [
     solution: 'An executive CRM covering the full lead-to-won journey with a sales automation that auto-drafts contracts, captures digital signatures, and fires CRM and ops actions the moment a deal closes.',
     workflow: ['Lead', 'Pipeline', 'Quotation', 'Agreement', 'Signature', 'Won'],
     outcome: 'A connected executive dashboard with automated deal closing — contracts, signatures, and follow-up actions triggered instantly.',
-    liveUrl: 'https://www.figma.com/make/w5bHBH94308aKpPy4kM9ob/Update-Markdown-File?p=f&t=ZAUWoUZXNA3KKdIp-0',
+    liveUrl: 'https://www.figma.com/make/w5bHBH94308aKpPy4kM9ob/Update-Markdown-File?code-node-id=0-6&p=f&t=YvM4jSGIhDn5yxqN-0&fullscreen=1',
     images: []
   }
 ];
