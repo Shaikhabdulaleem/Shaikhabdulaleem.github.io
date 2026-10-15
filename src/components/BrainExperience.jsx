@@ -625,9 +625,12 @@ export default function BrainExperience() {
 
   // drifting positions for the project brains (percent based)
   const fieldSpots = [
-    'left-[30%] top-[30%] md:left-[18%]',
-    'left-1/2 top-[52%]',
-    'left-[70%] top-[28%] md:left-[78%]'
+    'left-[22%] top-[32%] md:left-[18%]',
+    'left-1/2 top-[30%]',
+    'left-[78%] top-[32%] md:left-[82%]',
+    'left-[24%] top-[66%] md:left-[20%]',
+    'left-1/2 top-[68%]',
+    'left-[76%] top-[66%] md:left-[80%]'
   ];
 
   return (
@@ -757,10 +760,10 @@ export default function BrainExperience() {
                 >
                   <div>
                     <div className="group-hover:hidden">
-                      <NeuronCluster size={150} glow="#38bdf8" seed={study.id} pulse={!reducedMotion} />
+                      <NeuronCluster size={118} glow="#38bdf8" seed={study.id} pulse={!reducedMotion} />
                     </div>
                     <div className="hidden group-hover:block">
-                      <NeuronCluster size={150} glow="#c084fc" seed={study.id} pulse={!reducedMotion} />
+                      <NeuronCluster size={118} glow="#c084fc" seed={study.id} pulse={!reducedMotion} />
                     </div>
                   </div>
                   <div className="text-center max-w-[220px]">
@@ -849,14 +852,45 @@ export default function BrainExperience() {
                   </div>
                 </div>
 
-                <div className="mt-5 pt-4 border-t border-gray-900 flex justify-between items-center">
+                {activeStudy.images?.length > 0 && (
+                  <div className="mt-5">
+                    <h4 className="text-[10px] font-mono uppercase tracking-wider text-purple-400 mb-2">Design & Screens</h4>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                      {activeStudy.images.map((img) => (
+                        <a
+                          key={img.src}
+                          href={img.src}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="block rounded-lg overflow-hidden border border-gray-800 hover:border-cyan-700 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"
+                        >
+                          <img src={img.src} alt={img.alt || activeStudy.title} loading="lazy" className="w-full h-24 object-cover" />
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                <div className="mt-5 pt-4 border-t border-gray-900 flex flex-wrap gap-3 justify-between items-center">
                   <span className="text-[10px] font-mono text-gray-600 tracking-widest">ENG // 0{activeStudy.id} · NEURAL ARCHIVE</span>
-                  <button
-                    onClick={backToField}
-                    className="px-4 py-2 bg-gray-900 text-xs font-semibold text-gray-300 hover:text-white rounded-lg border border-gray-800 hover:border-gray-600 transition-colors"
-                  >
-                    Return to Project Grid
-                  </button>
+                  <div className="flex items-center gap-2">
+                    {activeStudy.liveUrl && (
+                      <a
+                        href={activeStudy.liveUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="px-4 py-2 bg-cyan-500 text-xs font-semibold text-slate-950 hover:bg-cyan-400 rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"
+                      >
+                        Open live prototype →
+                      </a>
+                    )}
+                    <button
+                      onClick={backToField}
+                      className="px-4 py-2 bg-gray-900 text-xs font-semibold text-gray-300 hover:text-white rounded-lg border border-gray-800 hover:border-gray-600 transition-colors"
+                    >
+                      Return to Project Grid
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
