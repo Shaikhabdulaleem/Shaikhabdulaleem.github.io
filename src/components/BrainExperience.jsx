@@ -14,70 +14,138 @@ import { caseStudies } from '../data/caseStudies';
 const EMBER_COLORS = ['#fbbf24', '#f59e0b', '#ef4444', '#fb7185'];
 
 /* ------------------------------------------------------------------ */
-/* Neuron field: a microscopic close-up — a few glowing cell bodies    */
-/* (somas) with organic branching dendrites, wired into a network.     */
-/* Same return shape as a point cloud so projection/pulses are reused.  */
+/* 3D brain point cloud: two wrinkled hemispheres + cerebellum + stem  */
 /* ------------------------------------------------------------------ */
-function buildNeuronField() {
+function buildBrainCloud() {
   const pts = [];
-  const adj = [];
+
+  // cortex surface
+  for (let i = 0; i < 260; i++) {
+    const u = Math.random() * 2 - 1;
+    const phi = Math.random() * Math.PI * 2;
+    const s = Math.sqrt(1 - u * u);
+    let x = s * Math.cos(phi) * 1.18; // front-back (long axis)
+    let y = u * 0.88; // up-down
+    let z = s * Math.sin(phi) * 0.98; // left-right
+
+    // cortical wrinkles: radial ripple + jitter
+    const wr = 1 + 0.055 * Math.sin(6 * phi) * Math.sin(5 * Math.acos(u)) + (Math.random() - 0.5) * 0.06;
+    x *= wr; y *= wr; z *= wr;
+
+    // flatter base, tapered frontal lobe
+    if (y < -0.42) y = -0.42 + (y + 0.42) * 0.35;
+    if (x > 0.55) z *= 0.88;
+
+    // hemisphere fissure along the midline
+    z += Math.sign(z || 1) * 0.06;
+
+    pts.push({ x, y, z, kind: 'cortex' });
+  }
+
+  // cerebellum (small wrinkled lobe, lower back)
+  for (let i = 0; i < 52; i++) {
+    const u = Math.random() * 2 - 1;
+    const phi = Math.random() * Math.PI * 2;
+    const s = Math.sqrt(1 - u * u);
+    const wr = 1 + (Math.random() - 0.5) * 0.1;
+    pts.push({
+      x: -0.62 + s * Math.cos(phi) * 0.4 * wr,
+      y: -0.62 + u * 0.28 * wr,
+      z: s * Math.sin(phi) * 0.52 * wr,
+      kind: 'cereb'
+    });
+  }
+
+  // brain stem
+  for (let i = 0; i < 18; i++) {
+    const t = i / 17;
+    const a = Math.random() * Math.PI * 2;
+    const r = 0.085 * Math.sqrt(Math.random());
+    pts.push({
+      x: -0.18 + t * 0.1 + Math.cos(a) * r,
+      y: -0.68 - t * 0.42 + (Math.random() - 0.5) * 0.03,
+      z: Math.sin(a) * r,
+      kind: 'stem'
+    });
+  }
+
+  const coreIndex = pts.length;
+  pts.push({ x: 0, y: -0.02, z: 0, kind: 'core' });
+
+  // Anatomical lobe tinting adds depth while keeping the established cyan/purple palette.
+  pts.forEach((p) => {
+    if (p.kind === 'core') {
+      p.lobe = 'core';
+      p.c = '255, 255, 255';
+    } else if (p.kind === 'stem') {
+      p.lobe = 'stem';
+      p.c = '125, 211, 252';
+    } else if (p.kind === 'cereb') {
+      p.lobe = 'cerebellum';
+      p.c = '167, 139, 250';
+    } else if (p.x > 0.42) {
+      p.lobe = 'frontal';
+      p.c = '103, 232, 249';
+    } else if (p.x < -0.52) {
+      p.lobe = 'occipital';
+      p.c = '192, 132, 252';
+    } else if (p.y < -0.08) {
+      p.lobe = 'temporal';
+      p.c = '96, 165, 250';
+    } else {
+      p.lobe = 'parietal';
+      p.c = '56, 189, 248';
+    }
+  });
+
+  // k-nearest-neighbor edges (computed once)
   const edges = [];
-  const somaIndices = [];
-  const palette = ['103, 232, 249', '56, 189, 248', '167, 139, 250', '96, 165, 250'];
-
-  const addPt = (p) => { pts.push(p); adj.push([]); return pts.length - 1; };
-  const link = (a, b) => {
-    if (a === b || adj[a].includes(b)) return;
-    edges.push([a, b]);
-    adj[a].push(b);
-    adj[b].push(a);
-  };
-
-  // Recursively grow a dendrite: a wandering chain of points that occasionally forks.
-  const growBranch = (startIndex, origin, dir, segs, step, color, depth) => {
-    let prev = startIndex;
-    const d = { ...dir };
-    const pos = { ...origin };
-    for (let s = 0; s < segs; s++) {
-      d.x += (Math.random() - 0.5) * 0.6;
-      d.y += (Math.random() - 0.5) * 0.6;
-      d.z += (Math.random() - 0.5) * 0.6;
-      const l = Math.hypot(d.x, d.y, d.z) || 1;
-      d.x /= l; d.y /= l; d.z /= l;
-      pos.x += d.x * step; pos.y += d.y * step; pos.z += d.z * step;
-      const idx = addPt({ x: pos.x, y: pos.y, z: pos.z, kind: s === segs - 1 ? 'tip' : 'dendrite', c: color });
-      link(prev, idx);
-      prev = idx;
-      if (depth < 1 && s > 0 && Math.random() < 0.45) {
-        growBranch(idx, pos, { x: d.x + (Math.random() - 0.5), y: d.y + (Math.random() - 0.5), z: d.z + (Math.random() - 0.5) }, 1 + Math.floor(Math.random() * 2), step * 0.8, color, depth + 1);
-      }
+  const adj = pts.map(() => []);
+  for (let i = 0; i < pts.length; i++) {
+    const dists = [];
+    for (let j = 0; j < pts.length; j++) {
+      if (i === j) continue;
+      const dx = pts[i].x - pts[j].x;
+      const dy = pts[i].y - pts[j].y;
+      const dz = pts[i].z - pts[j].z;
+      dists.push({ j, d: dx * dx + dy * dy + dz * dz });
     }
-  };
-
-  const SOMA = 6;
-  for (let n = 0; n < SOMA; n++) {
-    const a = (n / SOMA) * Math.PI * 2 + Math.random() * 0.4;
-    const rad = 0.3 + Math.random() * 0.6;
-    const origin = { x: Math.cos(a) * rad, y: (Math.random() - 0.5) * 1.0, z: Math.sin(a) * rad * 0.85 };
-    const color = palette[n % palette.length];
-    const si = addPt({ x: origin.x, y: origin.y, z: origin.z, kind: 'soma', c: color });
-    somaIndices.push(si);
-    const branches = 5 + Math.floor(Math.random() * 3);
-    for (let b = 0; b < branches; b++) {
-      const ba = (b / branches) * Math.PI * 2 + Math.random() * 0.5;
-      growBranch(si, origin, { x: Math.cos(ba), y: (Math.random() - 0.5) * 1.6, z: Math.sin(ba) }, 3 + Math.floor(Math.random() * 2), 0.2 + Math.random() * 0.1, color, 0);
+    dists.sort((a, b) => a.d - b.d);
+    for (let k = 0; k < 3; k++) {
+      const { j, d } = dists[k];
+      if (d > 0.09) continue; // skip long stragglers
+      if (i < j) edges.push([i, j]);
+      if (!adj[i].includes(j)) adj[i].push(j);
+      if (!adj[j].includes(i)) adj[j].push(i);
     }
   }
 
-  // Axons wire the central soma to the others so light travels between neurons.
-  const coreIndex = somaIndices[0];
+  // Twelve inner spokes connect the surface network to the central light core.
+  const cortexIndices = pts.map((point, index) => ({ point, index })).filter(({ point }) => point.kind === 'cortex');
   const coreEdges = [];
-  for (let i = 1; i < somaIndices.length; i++) {
-    link(coreIndex, somaIndices[i]);
-    coreEdges.push([coreIndex, somaIndices[i]]);
+  for (let anchor = 0; anchor < 12; anchor++) {
+    const angle = (anchor / 12) * Math.PI * 2;
+    const targetY = ((anchor % 3) - 1) * 0.42;
+    let best = cortexIndices[0];
+    let bestScore = -Infinity;
+    cortexIndices.forEach((candidate) => {
+      const point = candidate.point;
+      const length = Math.hypot(point.x, point.y, point.z) || 1;
+      const score = (point.x * Math.cos(angle) + point.z * Math.sin(angle) + point.y * targetY) / length;
+      if (score > bestScore) {
+        bestScore = score;
+        best = candidate;
+      }
+    });
+    if (!coreEdges.some(([, index]) => index === best.index)) {
+      coreEdges.push([coreIndex, best.index]);
+      edges.push([coreIndex, best.index]);
+      adj[coreIndex].push(best.index);
+      adj[best.index].push(coreIndex);
+    }
   }
 
-  return { pts, edges, adj, coreIndex, coreEdges, somaIndices };
+  return { pts, edges, adj, coreIndex, coreEdges };
 }
 
 /* Precomputed neural routes keep light pulses coherent without pathfinding per frame. */
@@ -99,7 +167,7 @@ function buildSignalRoutes(brain, count) {
     return {
       path,
       phase: (routeIndex * 0.193) % 1,
-      speed: 1.5 + (routeIndex % 3) * 0.2,
+      speed: 0.38 + (routeIndex % 3) * 0.045,
       color: routeIndex % 3 === 0 ? '#c4b5fd' : routeIndex % 3 === 1 ? '#a5f3fc' : '#ffffff'
     };
   }).filter((route) => route.path.length > 3);
@@ -214,12 +282,12 @@ export default function BrainExperience() {
     let inViewport = false;
     let pageVisible = document.visibilityState === 'visible';
     const mobile = window.matchMedia('(max-width: 768px)').matches;
-    const frameInterval = reducedMotion ? 250 : 1000 / (mobile ? 30 : 60);
+    const frameInterval = reducedMotion ? 250 : 1000 / (mobile ? 18 : 24);
 
     let embers = [];
     let streams = [];
-    const brain = buildNeuronField();
-    const brainSignals = buildSignalRoutes(brain, mobile ? 5 : 9);
+    const brain = buildBrainCloud();
+    const brainSignals = buildSignalRoutes(brain, mobile ? 4 : 6);
 
     const layout = () => {
       W = canvas.width = canvas.offsetWidth;
@@ -291,7 +359,7 @@ export default function BrainExperience() {
         const angle = reducedMotion ? -0.38 : t * 0.24 - 0.38;
         const cos = Math.cos(angle);
         const sin = Math.sin(angle);
-        const baseScale = Math.min(W * 0.32, H * 0.4);
+        const baseScale = Math.min(W * 0.25, H * 0.31);
         const scale = baseScale * (1 + burstAge * 1.15);
         const cx = W / 2;
         const cy = H * 0.6 + (reducedMotion ? 0 : Math.sin(t * 0.85) * 5);
@@ -311,17 +379,56 @@ export default function BrainExperience() {
           };
         });
 
-        // Faint ambient glow pooling behind the neuron cluster.
+        const aura = ctx.createRadialGradient(cx, cy, scale * 0.05, cx, cy, scale * 1.45);
+        aura.addColorStop(0, `rgba(56, 189, 248, ${0.12 * brainAlpha})`);
+        aura.addColorStop(0.48, `rgba(37, 99, 235, ${0.055 * brainAlpha})`);
+        aura.addColorStop(1, 'rgba(5, 7, 13, 0)');
+        ctx.fillStyle = aura;
+        ctx.beginPath();
+        ctx.arc(cx, cy, scale * 1.45, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Layered translucent tissue gives the point cloud an anatomical volume.
         ctx.save();
         ctx.globalAlpha = brainAlpha;
-        const ambient = ctx.createRadialGradient(cx, cy, scale * 0.1, cx, cy, scale * 1.6);
-        ambient.addColorStop(0, 'rgba(56, 189, 248, 0.10)');
-        ambient.addColorStop(0.5, 'rgba(37, 99, 235, 0.045)');
-        ambient.addColorStop(1, 'rgba(5, 7, 13, 0)');
-        ctx.fillStyle = ambient;
+        const tissue = ctx.createRadialGradient(cx - scale * 0.22, cy - scale * 0.2, scale * 0.08, cx, cy, scale * 1.08);
+        tissue.addColorStop(0, 'rgba(165, 243, 252, 0.12)');
+        tissue.addColorStop(0.48, 'rgba(37, 99, 235, 0.055)');
+        tissue.addColorStop(0.82, 'rgba(76, 29, 149, 0.035)');
+        tissue.addColorStop(1, 'rgba(2, 6, 23, 0)');
+        ctx.fillStyle = tissue;
         ctx.beginPath();
-        ctx.arc(cx, cy, scale * 1.6, 0, Math.PI * 2);
+        ctx.ellipse(cx, cy - scale * 0.03, scale * 1.13, scale * 0.83, -0.035, 0, Math.PI * 2);
         ctx.fill();
+
+        const hemisphereSeparation = Math.max(scale * 0.035, Math.abs(sin) * scale * 0.2);
+        [-1, 1].forEach((side) => {
+          const hx = cx + side * hemisphereSeparation;
+          const lobeGlow = ctx.createRadialGradient(hx - side * scale * 0.12, cy - scale * 0.17, scale * 0.04, hx, cy, scale * 0.8);
+          lobeGlow.addColorStop(0, side < 0 ? 'rgba(96, 165, 250, 0.1)' : 'rgba(192, 132, 252, 0.09)');
+          lobeGlow.addColorStop(1, 'rgba(15, 23, 42, 0)');
+          ctx.fillStyle = lobeGlow;
+          ctx.beginPath();
+          ctx.ellipse(hx, cy - scale * 0.05, scale * 0.78, scale * 0.72, side * 0.055, 0, Math.PI * 2);
+          ctx.fill();
+        });
+
+        const cerebellumGlow = ctx.createRadialGradient(cx - scale * 0.5, cy + scale * 0.42, 0, cx - scale * 0.5, cy + scale * 0.42, scale * 0.48);
+        cerebellumGlow.addColorStop(0, 'rgba(192, 132, 252, 0.11)');
+        cerebellumGlow.addColorStop(1, 'rgba(76, 29, 149, 0)');
+        ctx.fillStyle = cerebellumGlow;
+        ctx.beginPath();
+        ctx.ellipse(cx - scale * 0.48 * cos, cy + scale * 0.43, scale * 0.44, scale * 0.3, -0.12, 0, Math.PI * 2);
+        ctx.fill();
+
+        if (Math.abs(sin) > 0.15) {
+          ctx.beginPath();
+          ctx.moveTo(cx, cy - scale * 0.72);
+          ctx.bezierCurveTo(cx - sin * scale * 0.05, cy - scale * 0.3, cx + sin * scale * 0.06, cy + scale * 0.1, cx - sin * scale * 0.03, cy + scale * 0.48);
+          ctx.strokeStyle = `rgba(2, 6, 23, ${Math.min(0.5, Math.abs(sin) * 0.7) * brainAlpha})`;
+          ctx.lineWidth = Math.max(1, scale * 0.012);
+          ctx.stroke();
+        }
         ctx.restore();
 
         ctx.save();
@@ -345,27 +452,12 @@ export default function BrainExperience() {
         [...projected]
           .sort((a, b) => a.z - b.z)
           .forEach((point) => {
+            if (point.kind === 'core') return;
             const depth = Math.max(0.22, Math.min(1, 0.58 + point.z * 0.2));
-            if (point.kind === 'soma') {
-              // glowing cell body: soft halo + bright nucleus
-              const somaR = 6 * point.perspective;
-              const halo = ctx.createRadialGradient(point.x, point.y, 0, point.x, point.y, somaR * 2.6);
-              halo.addColorStop(0, `rgba(${point.color}, ${0.55 * depth * brainAlpha})`);
-              halo.addColorStop(1, `rgba(${point.color}, 0)`);
-              ctx.fillStyle = halo;
-              ctx.beginPath();
-              ctx.arc(point.x, point.y, somaR * 2.6, 0, Math.PI * 2);
-              ctx.fill();
-              ctx.beginPath();
-              ctx.arc(point.x, point.y, somaR, 0, Math.PI * 2);
-              ctx.fillStyle = `rgba(255, 255, 255, ${0.9 * depth * brainAlpha})`;
-              ctx.fill();
-              return;
-            }
-            const radius = (point.kind === 'tip' ? 1.4 : 2) * point.perspective;
+            const radius = (point.kind === 'stem' ? 1.45 : point.kind === 'cereb' ? 1.9 : 2.15) * point.perspective;
             ctx.beginPath();
             ctx.arc(point.x, point.y, radius, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(${point.color}, ${0.72 * depth * brainAlpha})`;
+            ctx.fillStyle = `rgba(${point.color}, ${0.7 * depth * brainAlpha})`;
             ctx.fill();
           });
 
@@ -394,7 +486,7 @@ export default function BrainExperience() {
             const envelope = 0.4 + Math.sin(progress * Math.PI) * 0.6;
             coreEnergy = Math.max(coreEnergy, Math.max(0, 1 - (1 - progress) / 0.1));
             for (let trail = 7; trail >= 0; trail--) {
-              const trailProgress = progress - trail * 0.02;
+              const trailProgress = progress - trail * 0.014;
               if (trailProgress < 0) continue;
               const routePosition = trailProgress * (route.length - 1);
               const segmentIndex = Math.min(route.length - 2, Math.floor(routePosition));
