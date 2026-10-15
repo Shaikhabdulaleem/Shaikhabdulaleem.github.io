@@ -20,7 +20,7 @@ function buildBrainCloud() {
   const pts = [];
 
   // cortex surface
-  for (let i = 0; i < 260; i++) {
+  for (let i = 0; i < 340; i++) {
     const u = Math.random() * 2 - 1;
     const phi = Math.random() * Math.PI * 2;
     const s = Math.sqrt(1 - u * u);
@@ -29,7 +29,8 @@ function buildBrainCloud() {
     let z = s * Math.sin(phi) * 0.98; // left-right
 
     // cortical wrinkles: radial ripple + jitter
-    const wr = 1 + 0.055 * Math.sin(6 * phi) * Math.sin(5 * Math.acos(u)) + (Math.random() - 0.5) * 0.06;
+    // coarse gyri plus a finer high-frequency fold make the cortical surface read as real tissue
+    const wr = 1 + 0.08 * Math.sin(6 * phi) * Math.sin(5 * Math.acos(u)) + 0.035 * Math.sin(11 * phi + 2 * u) + (Math.random() - 0.5) * 0.05;
     x *= wr; y *= wr; z *= wr;
 
     // flatter base, tapered frontal lobe
@@ -43,7 +44,7 @@ function buildBrainCloud() {
   }
 
   // cerebellum (small wrinkled lobe, lower back)
-  for (let i = 0; i < 52; i++) {
+  for (let i = 0; i < 68; i++) {
     const u = Math.random() * 2 - 1;
     const phi = Math.random() * Math.PI * 2;
     const s = Math.sqrt(1 - u * u);
@@ -167,7 +168,7 @@ function buildSignalRoutes(brain, count) {
     return {
       path,
       phase: (routeIndex * 0.193) % 1,
-      speed: 0.38 + (routeIndex % 3) * 0.045,
+      speed: 1.5 + (routeIndex % 3) * 0.2,
       color: routeIndex % 3 === 0 ? '#c4b5fd' : routeIndex % 3 === 1 ? '#a5f3fc' : '#ffffff'
     };
   }).filter((route) => route.path.length > 3);
@@ -287,7 +288,7 @@ export default function BrainExperience() {
     let embers = [];
     let streams = [];
     const brain = buildBrainCloud();
-    const brainSignals = buildSignalRoutes(brain, mobile ? 4 : 6);
+    const brainSignals = buildSignalRoutes(brain, mobile ? 5 : 9);
     let glowCache = null; // cached rotation-independent aura/tissue gradients, keyed by scale
 
     const layout = () => {
@@ -498,7 +499,7 @@ export default function BrainExperience() {
             const envelope = 0.4 + Math.sin(progress * Math.PI) * 0.6;
             coreEnergy = Math.max(coreEnergy, Math.max(0, 1 - (1 - progress) / 0.1));
             for (let trail = 7; trail >= 0; trail--) {
-              const trailProgress = progress - trail * 0.014;
+              const trailProgress = progress - trail * 0.02;
               if (trailProgress < 0) continue;
               const routePosition = trailProgress * (route.length - 1);
               const segmentIndex = Math.min(route.length - 2, Math.floor(routePosition));
