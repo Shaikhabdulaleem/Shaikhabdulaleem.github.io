@@ -41,7 +41,7 @@ export const caseStudies = [
     id: 4,
     title: 'Salon Management Suite',
     tag: 'SaaS Product Design',
-    challenge: 'Salons handle bookings, billing, inventory, and customer history across notebooks and separate tools, with no single view of daily revenue.',
+    challenge: 'Salons handle bookings, billing, inventory, and customer history across notebooks and disconnected apps, with no single view of daily revenue.',
     solution: 'A complete salon suite covering the counter flow — cart with live offers and tax, multiple payment methods, printable token and receipts with loyalty, and a real-time analytics module for revenue, cash, and discounts.',
     workflow: ['Booking', 'Cart & offers', 'Payment', 'Receipt & loyalty', 'Live analytics'],
     outcome: 'One platform for the full counter-to-analytics flow across gents and ladies salons, with live daily revenue visibility.',
