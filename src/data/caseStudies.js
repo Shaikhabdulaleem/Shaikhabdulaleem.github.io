@@ -70,5 +70,16 @@ export const caseStudies = [
     outcome: 'A connected executive dashboard with automated deal closing — contracts, signatures, and follow-up actions triggered instantly.',
     liveUrl: 'https://www.figma.com/make/w5bHBH94308aKpPy4kM9ob/Update-Markdown-File?code-node-id=0-6&p=f&t=YvM4jSGIhDn5yxqN-0&fullscreen=1',
     images: []
+  },
+  {
+    id: 7,
+    title: 'Geo-Fencing Workforce Dashboard',
+    tag: 'Workforce & Geofencing',
+    challenge: 'Managing multi-site workforce attendance by hand leaves gaps — no live view of who is present, late, or absent, and no proof that staff are actually at their assigned locations.',
+    solution: 'A workforce platform with geofenced check-ins, live attendance by shift, shift scheduling, leave and overtime tracking, productivity and device-usage insight, and a map of staff across every site.',
+    workflow: ['Geofence site', 'Shift schedule', 'Geo check-in', 'Live attendance', 'Reports'],
+    outcome: 'Real-time, location-verified attendance across sites, with overtime, productivity, and exceptions visible in one dashboard.',
+    liveUrl: 'https://www.figma.com/make/FelJhZWkQfWbUH8BdAP3bU/Geo-Fencing-Workforce-Management-Dashboard?code-node-id=0-6&p=f&t=Th1i5d8wuJc1thqO-0&fullscreen=1',
+    images: []
   }
 ];

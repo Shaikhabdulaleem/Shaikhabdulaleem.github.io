@@ -625,12 +625,13 @@ export default function BrainExperience() {
 
   // drifting positions for the project brains (percent based)
   const fieldSpots = [
-    'left-[22%] top-[32%] md:left-[18%]',
-    'left-1/2 top-[30%]',
-    'left-[78%] top-[32%] md:left-[82%]',
-    'left-[24%] top-[66%] md:left-[20%]',
+    'left-[15%] top-[30%] md:left-[13%]',
+    'left-[38%] top-[26%]',
+    'left-[62%] top-[26%]',
+    'left-[85%] top-[30%] md:left-[87%]',
+    'left-[27%] top-[66%] md:left-[24%]',
     'left-1/2 top-[68%]',
-    'left-[76%] top-[66%] md:left-[80%]'
+    'left-[73%] top-[66%] md:left-[76%]'
   ];
 
   return (
